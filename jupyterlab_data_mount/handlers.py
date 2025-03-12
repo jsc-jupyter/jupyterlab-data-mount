@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import urllib.parse
 
 from jupyter_server.base.handlers import APIHandler
@@ -8,12 +9,17 @@ from tornado import web
 from tornado.httpclient import AsyncHTTPClient, HTTPClientError, HTTPRequest
 
 from traitlets.config import Configurable
-from traitlets import Unicode, List
-
-import os
+from traitlets import Boolean, Unicode, List
 
 
 class DataMount(Configurable):
+    enabled = Boolean(
+        os.environ.get("JUPYTERLAB_DATA_MOUNT_ENABLED", "false").lower()
+        in ["1", "true"],
+        config=True,
+        help=("Enable extension backend"),
+    )
+
     api_url = Unicode(
         os.environ.get("JUPYTERLAB_DATA_MOUNT_API_URL", "http://localhost:8090/"),
         config=True,
@@ -53,6 +59,7 @@ class DataMount(Configurable):
 class DataMountHandler(APIHandler):
     c = {}
     templates = []
+    enabled = False
     api_url = None
     mount_dir = None
     client = None
@@ -61,6 +68,7 @@ class DataMountHandler(APIHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.c = DataMount(config=self.config)
+        self.enabled = self.c.enabled
         self.api_url = f"{self.c.api_url.rstrip('/')}/"
         self.mount_dir = self.c.mount_dir.rstrip("/")
         self.templates = self.c.templates
@@ -73,29 +81,35 @@ class DataMountHandler(APIHandler):
         elif option == "mountdir":
             self.finish(json.dumps(self.mount_dir))
         else:
-            try:
-                request = HTTPRequest(self.api_url, method="GET", headers=self.headers)
-                response = await self.client.fetch(request)
-                backend_list = json.loads(response.body.decode("utf-8"))
-                frontend_list = []
-                for item in backend_list:
-                    options = item["options"]
-                    template = options.get("template", None)
-                    path = f"{self.mount_dir}/{item['path']}"
-
-                    config = options.get("config")
-                    config["readonly"] = options.get("readonly", False)
-                    config["displayName"] = options.get("displayName", False)
-                    config["external"] = options.get("external", False)
-
-                    frontend_list.append(
-                        {"template": template, "path": path, "options": config}
+            if not self.enabled:
+                self.set_status(200)
+                self.finish(json.dumps([]))
+            else:
+                try:
+                    request = HTTPRequest(
+                        self.api_url, method="GET", headers=self.headers
                     )
+                    response = await self.client.fetch(request)
+                    backend_list = json.loads(response.body.decode("utf-8"))
+                    frontend_list = []
+                    for item in backend_list:
+                        options = item["options"]
+                        template = options.get("template", None)
+                        path = f"{self.mount_dir}/{item['path']}"
 
-                self.finish(json.dumps(frontend_list))
-            except Exception as e:
-                self.set_status(400)
-                self.finish(str(e))
+                        config = options.get("config")
+                        config["readonly"] = options.get("readonly", False)
+                        config["displayName"] = options.get("displayName", False)
+                        config["external"] = options.get("external", False)
+
+                        frontend_list.append(
+                            {"template": template, "path": path, "options": config}
+                        )
+
+                    self.finish(json.dumps(frontend_list))
+                except Exception as e:
+                    self.set_status(400)
+                    self.finish(str(e))
 
     @web.authenticated
     async def delete(self, path):
