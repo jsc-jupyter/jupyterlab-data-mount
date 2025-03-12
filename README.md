@@ -1,6 +1,5 @@
-# jupyterlab_data_mount
+# JupyterLab DataMount Extension
 
-[![Github Actions Status](/workflows/Build/badge.svg)](/actions/workflows/build.yml)
 [![Jupyter4NFDI Binder](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/jsc-jupyter/jupyterlab-data-mount/HEAD)
 
 A JupyterLab extension to mount external data storage locations.
