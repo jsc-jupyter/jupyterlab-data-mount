@@ -9,11 +9,11 @@ from tornado import web
 from tornado.httpclient import AsyncHTTPClient, HTTPClientError, HTTPRequest
 
 from traitlets.config import Configurable
-from traitlets import Boolean, Unicode, List
+from traitlets import Bool, Unicode, List
 
 
 class DataMount(Configurable):
-    enabled = Boolean(
+    enabled = Bool(
         os.environ.get("JUPYTERLAB_DATA_MOUNT_ENABLED", "false").lower()
         in ["1", "true"],
         config=True,
