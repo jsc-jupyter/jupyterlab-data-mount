@@ -27,7 +27,7 @@
     "style": "style/index.css",
     "repository": {
         "type": "git",
-        "url": ".git"
+        "url": "https://github.com/jsc-jupyter/jupyterlab-data-mount.git"
     },
     "scripts": {
         "build": "jlpm build:lib && jlpm build:labextension:dev",
