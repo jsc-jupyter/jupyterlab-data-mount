@@ -1,13 +1,13 @@
 import React from 'react';
 import { LabIcon } from '@jupyterlab/ui-components';
 
-interface IconButtonProps {
+interface IIconButtonProps {
   icon: LabIcon;
   tooltip: string;
   onClick: () => void;
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({
+export const IconButton: React.FC<IIconButtonProps> = ({
   icon,
   tooltip,
   onClick

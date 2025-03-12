@@ -46,7 +46,7 @@ div:has(> .data-mount-dialog-body) {
 }
 
 .icon-button:hover {
-  background: color-mix(in srgb, black 10%, transparent);
+  background: rgb(0 0 0 / 10%);
   border-radius: 4px;
 }
 

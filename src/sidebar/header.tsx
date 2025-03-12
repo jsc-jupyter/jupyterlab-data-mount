@@ -16,7 +16,7 @@ export default class SideBarHeader extends React.Component<{
       <>
         <div className="data-mount-sidepanel-header container mb-3">
           <a
-            data-tooltip-id={`data-mount-tooltip-documentation`}
+            data-tooltip-id={'data-mount-tooltip-documentation'}
             data-tooltip-html="Click for documentation"
             data-tooltip-place="left"
             className="data-mount-sidepanel-header-documentation lh-1 ms-auto data-mount-dialog-label-tooltip"
@@ -63,7 +63,7 @@ export default class SideBarHeader extends React.Component<{
           </div>
           <hr />
         </div>
-        <Tooltip id={`data-mount-tooltip-documentation`} />
+        <Tooltip id={'data-mount-tooltip-documentation'} />
       </>
     );
   }

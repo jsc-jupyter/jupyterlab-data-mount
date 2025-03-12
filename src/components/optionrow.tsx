@@ -92,7 +92,7 @@ export default class OptionRow extends React.Component<
                 value={valueFirst}
                 onChange={this.handleKeyChange}
                 placeholder={placeholderFirst}
-                disabled={!editable || this.props.index == 0}
+                disabled={!editable || this.props.index === 0}
                 className={`form-control data-mount-dialog-textfield ${
                   this.props.invalid ? 'invalid' : ''
                 }`}
@@ -106,7 +106,7 @@ export default class OptionRow extends React.Component<
                 disabled={!editable}
                 className="form-control data-mount-dialog-textfield"
               />
-              {this.props.index != 0 && (
+              {this.props.index !== 0 && (
                 <button
                   style={{ marginLeft: '8px' }}
                   className="icon-button"
@@ -116,7 +116,7 @@ export default class OptionRow extends React.Component<
                   <DeleteIcon.react tag="span" width="16px" height="16px" />
                 </button>
               )}
-              {this.props.index == 0 && (
+              {this.props.index === 0 && (
                 <button
                   style={{
                     marginLeft: '8px',

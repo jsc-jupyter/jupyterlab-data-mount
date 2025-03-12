@@ -9,7 +9,7 @@ import { listAllMountpoints, RequestRemoveMountPoint } from '../handler';
 
 import { IDataMount } from '../index';
 
-interface SideBarState {
+interface ISideBarState {
   mountPoints: IDataMount[];
   globalLoading: boolean;
   globalLoadingFailed: boolean;
@@ -23,7 +23,7 @@ class SideBarComponent extends React.Component<
     templates: string[];
     mountDir: string;
   },
-  SideBarState
+  ISideBarState
 > {
   private _app: JupyterFrontEnd;
   private _commands: CommandRegistry;
@@ -99,7 +99,9 @@ class SideBarComponent extends React.Component<
               mountPoint_ => mountPoint_.path !== mountPoint.path
             )
           }));
-        } catch {}
+        } catch (error) {
+          console.error('Error updating mount points:', error);
+        }
       } else {
         alert(
           `Could not unmount ${mountPoint.options.displayName}.\nCheck ${this.props.mountDir}/mount.log for details`

@@ -35,7 +35,7 @@ export class BaseComponent<
   }
 
   getDisplayName() {
-    return `Replace in subclass`;
+    return 'Replace in subclass';
   }
 
   handleDropdownChange(key: string, value: string) {

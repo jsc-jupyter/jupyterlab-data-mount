@@ -41,7 +41,7 @@ async function activate(
   const templates = await RequestGetTemplates();
   const mountDir = await RequestGetMountDir();
 
-  let sbwidget = new SideBarWidget(
+  const sbwidget = new SideBarWidget(
     app,
     app.commands,
     CommandIDs.opendialog,

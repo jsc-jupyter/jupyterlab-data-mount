@@ -129,7 +129,7 @@ export default class Generic extends BaseComponent<
             <p>
               Generic Configuration
               <a
-                data-tooltip-id={`data-mount-generic-tooltip`}
+                data-tooltip-id={'data-mount-generic-tooltip'}
                 data-tooltip-html="Click for documentation"
                 data-tooltip-place="left"
                 className="data-mount-generic-tooltip lh-1 ms-1 data-mount-dialog-label-tooltip"
@@ -151,7 +151,7 @@ export default class Generic extends BaseComponent<
               </a>
             </p>
           </div>
-          <Tooltip id={`data-mount-generic-tooltip`} />
+          <Tooltip id={'data-mount-generic-tooltip'} />
           {this.state.rows.map(row => (
             <OptionRow
               index={row.index}
