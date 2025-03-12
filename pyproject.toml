@@ -2,9 +2,15 @@
 requires = ["hatchling>=1.5.0", "jupyterlab>=4.0.0,<5", "hatch-nodejs-version>=0.3.2"]
 build-backend = "hatchling.build"
 
+
 [project]
 name = "jupyterlab_data_mount"
 readme = "README.md"
+description = "JupyterLab extension to mount external data storage"
+authors = [
+  {name = "Tim Kreuzer", email = "t.kreuzer@fz-juelich.de"}
+]
+keywords = ["jupyter"]
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
 classifiers = [
@@ -25,7 +31,20 @@ classifiers = [
 dependencies = [
     "jupyter_server>=2.4.0,<3"
 ]
-dynamic = ["version", "description", "authors", "urls", "keywords"]
+dynamic = ["version"]
+
+[project.urls]
+homepage = "https://github.com/jsc-jupyter/jupyterlab-data-mount"
+Repository = "https://github.com/jsc-jupyter/jupyterlab-data-mount.git"
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "pytest-jupyter[server]>=0.6.0"
+]
 
 [tool.hatch.version]
 source = "nodejs"
