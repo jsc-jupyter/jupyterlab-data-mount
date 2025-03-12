@@ -40,13 +40,14 @@ div:has(> .data-mount-dialog-body) {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
   border-radius: 5px;
   transition: background 0.2s ease-in-out;
+  padding: 5px;
 }
 
 .icon-button:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: color-mix(in srgb, black 10%, transparent);
+  border-radius: 4px;
 }
 
 .icon-button-container {
@@ -96,7 +97,7 @@ div:has(> .data-mount-dialog-body) {
 
 .data-mount-sidepanel-header {
   text-align: center;
-  padding: 0px !important;
+  padding: 0 !important;
   position: relative;
 }
 
@@ -133,18 +134,6 @@ div:has(> .data-mount-dialog-body) {
 .item-actions {
   display: flex;
   gap: 8px;
-}
-
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.icon-button:hover {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
 }
 
 .unmount {
