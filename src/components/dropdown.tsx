@@ -41,8 +41,7 @@ export class DropdownComponent extends React.Component<IDropdownProps> {
     const values = this.props.values;
     const label = this.props.label;
     const tooltip = this.props.tooltip;
-    const valuesReact: React.JSX.Element[];
-    valuesReact = values.map(x => {
+    const valuesReact = values.map(x => {
       if (x.value === selected) {
         return (
           <option value={x.value} selected>
