@@ -1,11 +1,11 @@
-# JupyterLab DataMount Extension
+# jupyterlab_data_mount
 
-[![Jupyter4NFDI Binder](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/jsc-jupyter/jupyterlab-data-mount/HEAD)
+[![Github Actions Status](https://github.com/jsc-jupyter/jupyterlab-data-mount/workflows/Build/badge.svg)](https://github.com/jsc-jupyter/jupyterlab-data-mount/actions/workflows/build.yml)
 
-A JupyterLab extension to mount external data storage locations.
+A JupyterLab extension to mount external data storage
 
 This extension is composed of a Python package named `jupyterlab_data_mount`
-for the server extension and a NPM package named `jupyterlab-data-mount`
+for the server extension and a NPM package named `jupyterlab_data_mount`
 for the frontend extension.
 
 ## Requirements
@@ -58,7 +58,7 @@ The `jlpm` command is JupyterLab's pinned version of
 # Clone the repo to your local environment
 # Change directory to the jupyterlab_data_mount directory
 # Install package in development mode
-pip install -e ".[test]"
+pip install -e "."
 # Link your development version of the extension with JupyterLab
 jupyter labextension develop . --overwrite
 # Server extension must be manually installed in develop mode
@@ -94,45 +94,7 @@ pip uninstall jupyterlab_data_mount
 
 In development mode, you will also need to remove the symlink created by `jupyter labextension develop`
 command. To find its location, you can run `jupyter labextension list` to figure out where the `labextensions`
-folder is located. Then you can remove the symlink named `jupyterlab-data-mount` within that folder.
-
-### Testing the extension
-
-#### Server tests
-
-This extension is using [Pytest](https://docs.pytest.org/) for Python code testing.
-
-Install test dependencies (needed only once):
-
-```sh
-pip install -e ".[test]"
-# Each time you install the Python package, you need to restore the front-end extension link
-jupyter labextension develop . --overwrite
-```
-
-To execute them, run:
-
-```sh
-pytest -vv -r ap --cov jupyterlab_data_mount
-```
-
-#### Frontend tests
-
-This extension is using [Jest](https://jestjs.io/) for JavaScript code testing.
-
-To execute them, execute:
-
-```sh
-jlpm
-jlpm test
-```
-
-#### Integration tests
-
-This extension uses [Playwright](https://playwright.dev/docs/intro) for the integration tests (aka user level tests).
-More precisely, the JupyterLab helper [Galata](https://github.com/jupyterlab/jupyterlab/tree/master/galata) is used to handle testing the extension in JupyterLab.
-
-More information are provided within the [ui-tests](./ui-tests/README.md) README.
+folder is located. Then you can remove the symlink named `jupyterlab_data_mount` within that folder.
 
 ### Packaging the extension
 
