@@ -36,10 +36,10 @@ jobs:
         python -m pip install .[test]
 
         jupyter server extension list
-        jupyter server extension list 2>&1 | grep -ie "jupyterlab_data_mount.*OK"
+        jupyter server extension list 2>&1 | grep -ie "jupyterlab-data-mount.*OK"
 
         jupyter labextension list
-        jupyter labextension list 2>&1 | grep -ie "jupyterlab_data_mount.*OK"
+        jupyter labextension list 2>&1 | grep -ie "jupyterlab-data-mount.*OK"
         python -m jupyterlab.browser_check
 
     - name: Package the extension
@@ -81,10 +81,10 @@ jobs:
 
 
         jupyter server extension list
-        jupyter server extension list 2>&1 | grep -ie "jupyterlab_data_mount.*OK"
+        jupyter server extension list 2>&1 | grep -ie "jupyterlab-data-mount.*OK"
 
         jupyter labextension list
-        jupyter labextension list 2>&1 | grep -ie "jupyterlab_data_mount.*OK"
+        jupyter labextension list 2>&1 | grep -ie "jupyterlab-data-mount.*OK"
         python -m jupyterlab.browser_check --no-browser-test
 
 
