@@ -57,8 +57,8 @@ artifacts = ["jupyterlab_data_mount/labextension"]
 exclude = [".github", "binder"]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"jupyterlab_data_mount/labextension" = "share/jupyter/labextensions/jupyterlab_data_mount"
-"install.json" = "share/jupyter/labextensions/jupyterlab_data_mount/install.json"
+"jupyterlab_data_mount/labextension" = "share/jupyter/labextensions/jupyterlab-data-mount"
+"install.json" = "share/jupyter/labextensions/jupyterlab-data-mount/install.json"
 "jupyter-config/server-config" = "etc/jupyter/jupyter_server_config.d"
 
 [tool.hatch.build.hooks.version]
