@@ -1,0 +1,141 @@
+import * as React from 'react';
+import { JupyterFrontEnd } from '@jupyterlab/application';
+import { CommandRegistry } from '@lumino/commands';
+import { DirectoryIcon, SettingsIcon, StopIcon } from '../icon';
+import { Dialog, showDialog } from '@jupyterlab/apputils';
+import { MountDialogBody } from '../dialog/widget';
+
+import { IDataMount } from '../index';
+
+export default class SideBarBody extends React.Component<{
+  app: JupyterFrontEnd;
+  commands: CommandRegistry;
+  commandId: string;
+  templates: string[];
+  mountDir: string;
+  loading: boolean;
+  mountPoints: IDataMount[];
+  removeMountPoint: (mountPoint: IDataMount) => void;
+}> {
+  constructor(props: any) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="data-mount-sidebar">
+        <div className="data-mount-sidebar-header">
+          <div className="header-item name">Mount</div>
+          <div className="header-item actions">Actions</div>
+        </div>
+        <ul className="data-mount-sidebar-list">
+          {this.props.mountPoints.map(mount => (
+            <MountRowElement
+              mount={mount}
+              commands={this.props.commands}
+              templates={this.props.templates}
+              mountDir={this.props.mountDir}
+              removeMountPoint={this.props.removeMountPoint}
+            />
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+class MountRowElement extends React.Component<{
+  mount: IDataMount;
+  commands: CommandRegistry;
+  templates: string[];
+  mountDir: string;
+  removeMountPoint: (mountPoint: IDataMount) => void;
+}> {
+  constructor(props: any) {
+    super(props);
+  }
+
+  openDirectory = () => {
+    this.props.commands.execute('filebrowser:open-path', {
+      path: `${this.props.mount.path}`
+    });
+  };
+
+  openDialog = () => {
+    const buttons = [Dialog.okButton({ label: 'Ok' })];
+    const options = {
+      template: this.props.mount.template,
+      path: this.props.mount.path,
+      options: { ...this.props.mount.options }
+    };
+    const body = new MountDialogBody(
+      false,
+      options,
+      this.props.templates,
+      this.props.mountDir
+    );
+
+    body.node.style.overflow = 'visible';
+    body.node.className = 'data-mount-dialog-body';
+    showDialog({
+      title: 'Data Mount',
+      body: body,
+      buttons: buttons
+    });
+  };
+
+  render() {
+    const loading = this.props.mount.loading || false;
+    return (
+      <li
+        key={this.props.mount.options.displayName}
+        className="data-mount-sidebar-item"
+      >
+        <span
+          className={`item-name ${
+            this.props.mount.options.external || loading ? 'external' : ''
+          }`}
+        >
+          {this.props.mount.options.displayName}
+          {loading ? ' ( loading ... )' : ''}
+        </span>
+        <span className="item-actions">
+          {!loading && (
+            <button
+              className="icon-button"
+              title={`Open ${this.props.mountDir}/${this.props.mount.path}`}
+              onClick={() => this.openDirectory()}
+            >
+              <DirectoryIcon.react tag="span" width="16px" height="16px" />
+            </button>
+          )}
+          {!loading && !this.props.mount.options.external && (
+            <>
+              <button
+                className="icon-button"
+                title="Show options"
+                onClick={this.openDialog}
+              >
+                <SettingsIcon.react tag="span" width="16px" height="16px" />
+              </button>
+
+              <button
+                className="icon-button unmount"
+                title="Unmount"
+                onClick={async () => {
+                  try {
+                    await this.props.removeMountPoint(this.props.mount);
+                  } catch (error) {
+                    console.error('Unmount failed:', error);
+                  }
+                }}
+              >
+                <StopIcon.react tag="span" width="16px" height="16px" />
+              </button>
+            </>
+          )}
+        </span>
+      </li>
+    );
+  }
+}

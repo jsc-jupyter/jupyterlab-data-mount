@@ -1,0 +1,8 @@
+{
+  "jupyter.lab.shortcuts": [],
+  "title": "jupyterlab-data-mount",
+  "description": "jupyterlab-data-mount settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}

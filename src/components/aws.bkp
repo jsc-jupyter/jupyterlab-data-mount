@@ -1,0 +1,111 @@
+import * as React from 'react';
+
+import { IDropdownValues, DropdownComponent } from '../components/dropdown';
+import { TextField } from '../components/textfield';
+
+interface IAWSState {
+  region: string;
+  username: string;
+  password: string;
+}
+
+interface IAWSProps {
+  onValueChange: any;
+}
+
+export default class AWS extends React.Component<IAWSProps, IAWSState> {
+  private awsRegions: IDropdownValues[] = [
+    { value: "eu-north-1", label: "EU (Stockholm) (eu-north-1)" },
+    { value: "eu-central-1", label: "EU (Frankfurt) (eu-central-1)" },
+    { value: "eu-west-1", label: "EU (Ireland) (eu-west-1)" },
+    { value: "eu-west-2", label: "EU (London) (eu-west-2)" },
+    { value: "ca-central-1", label: "Canada (Central) (ca-central-1)" },
+    { value: "us-east-1", label: "US East (Northern Virginia) (us-east-1)" },
+    { value: "us-east-2", label: "US East (Ohio) (us-east-2)" },
+    { value: "us-west-1", label: "US West (Northern California) (us-west-1)" },
+    { value: "us-west-2", label: "US West (Oregon) (us-west-2)" },
+    { value: "ap-southeast-1", label: "Asia Pacific (Singapore) (ap-southeast-1)" },
+    { value: "ap-southeast-2", label: "Asia Pacific (Sydney) (ap-southeast-2)" },
+    { value: "ap-northeast-1", label: "Asia Pacific (Tokyo) (ap-northeast-1)" },
+    { value: "ap-northeast-2", label: "Asia Pacific (Seoul) (ap-northeast-2)" },
+    { value: "ap-south-1", label: "Asia Pacific (Mumbai) (ap-south-1)" },
+    { value: "sa-east-1", label: "South America (Sao Paulo) (sa-east-1)" }
+  ];
+
+
+  constructor(props: any) {
+    super(props);
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
+
+    this.state = {
+      region: "eu-north-1",
+      username: "",
+      password: ""
+    }
+  }
+
+  componentWillUnmount() {
+    Object.keys(this.state).forEach((key) => {
+      this.props.onValueChange(key, null);
+    });
+  }
+
+  componentDidMount() {
+    Object.entries(this.state).forEach(([key, value]) => {
+      this.props.onValueChange(key, value);
+    });
+  }
+
+
+  handleDropdownChange = (key: string, value: string) => {
+    this.setState({ [key]: value } as Pick<IAWSState, keyof IAWSState>);
+    this.props.onValueChange(key, value);
+  };
+
+  handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value } as Pick<IAWSState, keyof IAWSState>);
+    this.props.onValueChange(name, value);
+  };
+
+  render() {
+    console.log("Render AWS");
+    return <>
+      <div className="row">
+        <div className="col-12">
+          <div className="row mb-1">
+            <h2>AWS Configuration</h2>
+          </div>
+            <DropdownComponent
+              label="Region"
+              key_="region"
+              selected={this.state.region}
+              values={this.awsRegions}
+              onValueChange={this.handleDropdownChange}
+              editable={true}
+              searchable={true}
+            />
+          <div className="row mb-1">
+            <TextField
+              label="Username"
+              name="username"
+              value={this.state.username}
+              onChange={this.handleTextFieldChange}
+            />
+          </div>
+
+          <div className="row mb-1">
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.handleTextFieldChange}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  }
+}

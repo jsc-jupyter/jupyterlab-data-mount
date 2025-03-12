@@ -1,0 +1,54 @@
+import * as React from 'react';
+import { CommandRegistry } from '@lumino/commands';
+
+export default class SideBarBody extends React.Component<{
+  commands: CommandRegistry;
+  commandId: string;
+}> {
+  render() {
+    return (
+      <div className="data-mount-sidebar-Listing">
+        <div className="data-mount-sidebar-list-header">
+          <div
+            className="data-mount-sidebar-list-headerItem jp-id-name jp-mod-selected"
+            style={{ width: '137.5px' }}
+          >
+            <span className="data-mount-sidebar-list-headerItemText">
+              Mount
+            </span>
+          </div>
+          <div
+            className="data-mount-sidebar-list-headerItem jp-id-modified"
+            style={{ width: '92.5px' }}
+          >
+            <span className="data-mount-sidebar-list-headerItemText data-mount-sidebar-list-headerItemText-small">
+              Actions
+            </span>
+          </div>
+        </div>
+
+        <ul
+          data-lm-dragscroll="true"
+          className="data-mount-sidebar-list-content"
+        >
+          <li className="data-mount-sidebar-list-item jp-mod-selected">
+            <span
+              className="data-mount-sidebar-list-itemName"
+              style={{ width: '90px' }}
+            >
+              <span className="data-mount-sidebar-list-itemText">
+                <span>binder</span>
+              </span>
+            </span>
+            <span
+              className="data-mount-sidebar-list-itemModified"
+              style={{ width: '60px' }}
+            >
+              2d ago
+            </span>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+}

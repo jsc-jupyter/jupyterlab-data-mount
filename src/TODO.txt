@@ -1,0 +1,22 @@
+Next JS
+  # not used tailwind style
+  jlpm add tailwindcss @tailwindcss/postcss postcss
+  jlpm remove
+
+daisyui
+mui
+  jlpm add @mui/material @emotion/react @emotion/styled @mui/icons-material
+  jlpm install
+shadcn
+lucide react
+context
+
+
+
+
+
+
+                      index.ts : App
+          Dialog.getValues()
+          Template_ref                              Sidebar
+                                                     Body
