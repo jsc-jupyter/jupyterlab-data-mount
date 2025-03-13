@@ -5,6 +5,7 @@ import { DirectoryIcon, SettingsIcon, StopIcon } from '../icon';
 import { Dialog, showDialog } from '@jupyterlab/apputils';
 import { MountDialogBody } from '../dialog/widget';
 
+import { PageConfig } from '@jupyterlab/coreutils';
 import { IDataMount } from '../index';
 
 export default class SideBarBody extends React.Component<{
@@ -55,9 +56,9 @@ class MountRowElement extends React.Component<{
     super(props);
   }
 
-  openDirectory = () => {
+  openDirectory = (path: string) => {
     this.props.commands.execute('filebrowser:open-path', {
-      path: `${this.props.mount.path}`
+      path: path
     });
   };
 
@@ -86,6 +87,14 @@ class MountRowElement extends React.Component<{
 
   render() {
     const loading = this.props.mount.loading || false;
+
+    const serverRoot = PageConfig.getOption('serverRoot');
+    let relativePath = this.props.mount.path.replace(serverRoot, '');
+
+    if (relativePath.startsWith('/')) {
+      relativePath = relativePath.substring(1);
+    }
+
     return (
       <li
         key={this.props.mount.options.displayName}
@@ -103,8 +112,8 @@ class MountRowElement extends React.Component<{
           {!loading && (
             <button
               className="icon-button"
-              title={`Open ${this.props.mountDir}/${this.props.mount.path}`}
-              onClick={() => this.openDirectory()}
+              title={`Open ${relativePath}`}
+              onClick={() => this.openDirectory(relativePath)}
             >
               <DirectoryIcon.react tag="span" width="16px" height="16px" />
             </button>
