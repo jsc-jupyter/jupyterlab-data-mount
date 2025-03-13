@@ -63,7 +63,34 @@ class DataMountHandler(APIHandler):
     api_url = None
     mount_dir = None
     client = None
+    reached_api = False
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
+
+    async def fetch(self, request, timeout=60, interval=2):
+        start_time = asyncio.get_event_loop().time()
+
+        while asyncio.get_event_loop().time() - start_time < timeout:
+            try:
+                response = await self.client.fetch(request)
+                self.reached_api = True
+                return response
+            except HTTPClientError as e:
+                if self.reached_api:
+                    raise e
+                self.log.debug(f"Data Mount API not ready, retrying in {interval}s...")
+                await asyncio.sleep(interval)
+            except ConnectionRefusedError:
+                if self.reached_api:
+                    raise e
+                self.log.debug(f"Data Mount API not ready, retrying in {interval}s...")
+                await asyncio.sleep(interval)
+
+        self.log.info(
+            f"Data Mount API did not become ready within {timeout} seconds. Giving up."
+        )
+        raise Exception(
+            f"Data Mount API did not become ready within {timeout} seconds. Giving up."
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -89,7 +116,7 @@ class DataMountHandler(APIHandler):
                     request = HTTPRequest(
                         self.api_url, method="GET", headers=self.headers
                     )
-                    response = await self.client.fetch(request)
+                    response = await self.fetch(request)
                     backend_list = json.loads(response.body.decode("utf-8"))
                     frontend_list = []
                     for item in backend_list:
@@ -117,7 +144,7 @@ class DataMountHandler(APIHandler):
         url = url_path_join(self.api_url, path)
         try:
             request = HTTPRequest(url, method="DELETE", headers=self.headers)
-            response = await self.client.fetch(request)
+            await self.fetch(request)
             self.set_status(204)
         except HTTPClientError as e:
             self.set_status(400)
@@ -156,8 +183,7 @@ class DataMountHandler(APIHandler):
                 headers=self.headers,
                 request_timeout=60.0,
             )
-            response = await self.client.fetch(request)
-            self.log.info(response)
+            await self.fetch(request)
         except Exception as e:
             self.set_status(400)
 
