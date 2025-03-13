@@ -28,7 +28,7 @@ export default class B2Drop extends BaseComponent<IB2DropProps, IB2DropState> {
 
   constructor(props: any) {
     super(props);
-    // this.handleUserTextFieldChange = this.handleUserTextFieldChange.bind(this);
+    this.handleUserTextFieldChange = this.handleUserTextFieldChange.bind(this);
     if (
       !props.editable &&
       props.options &&
@@ -51,23 +51,25 @@ export default class B2Drop extends BaseComponent<IB2DropProps, IB2DropState> {
     return 'B2Drop';
   }
 
-  // Not supported by B2Drop so far.
-  // handleUserTextFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
-  //   const value = event.target.value;
-  //
-  //   this.setState(
-  //     {
-  //       user: value,
-  //       url: `https://b2drop.eudat.eu/dav/files/${value}/`,
-  //     },
-  //     () => {
-  //       if (this.props.onValueChange) {
-  //         this.props.onValueChange("user", value);
-  //         this.props.onValueChange("url", `https://b2drop.eudat.eu/dav/files/${value}/`);
-  //       }
-  //     }
-  //   );
-  // }
+  handleUserTextFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+
+    this.setState(
+      {
+        user: value,
+        url: `https://b2drop.eudat.eu/remote.php/dav/files/${value}/`
+      },
+      () => {
+        if (this.props.onValueChange) {
+          this.props.onValueChange('user', value);
+          this.props.onValueChange(
+            'url',
+            `https://b2drop.eudat.eu/remote.php/dav/files/${value}/`
+          );
+        }
+      }
+    );
+  }
 
   render() {
     return (
@@ -81,7 +83,7 @@ export default class B2Drop extends BaseComponent<IB2DropProps, IB2DropState> {
           tooltip={this.tooltips.user}
           value={this.state.user}
           editable={this.props.editable}
-          onChange={this.handleTextFieldChange}
+          onChange={this.handleUserTextFieldChange}
         />
         <TextField
           label="Password"
