@@ -11,7 +11,7 @@ JupyterLab DataMount provides an intuitive way to access external storage within
 3. Click on "Add Mount" to open the mount dialog.
 
 <div style="text-align: center;">
-  <img src="/images/sidebar.png" alt="Sidebar" style="width: 50%;">
+  <img src="images/sidebar.png" alt="Sidebar" style="width: 50%;">
 </div>
 
 ## Mounting a Storage Location
@@ -26,7 +26,7 @@ JupyterLab DataMount provides an intuitive way to access external storage within
    The extension will establish a connection and mount the storage location.
 
 <div style="text-align: center;">
-  <img src="/images/dialog.png" alt="Dialog" style="width: 50%;">
+  <img src="images/dialog.png" alt="Dialog" style="width: 50%;">
 </div>
 
 ## Managing Mounted Storage
@@ -36,7 +36,7 @@ JupyterLab DataMount provides an intuitive way to access external storage within
 - **Unmount**: Unmount external storage location.
 
 <div style="text-align: center;">
-  <img src="/images/mountlist.png" alt="Mountlist" style="width: 30%;">
+  <img src="images/mountlist.png" alt="Mountlist" style="width: 30%;">
 </div>
 
 ## Working with Mounted Storage
@@ -52,7 +52,7 @@ These mounts are set up by administrators and cannot be modified by the user. Th
 Preconfigured mounts are displayed in _italic_ and only provide the **"Open Directory"** button.
 
 <div style="text-align: center;">
-  <img src="/images/mountlist_ext.png" alt="Mountlist" style="width: 30%;">
+  <img src="images/mountlist_ext.png" alt="Mountlist" style="width: 30%;">
 </div>
 
 ## Next Steps

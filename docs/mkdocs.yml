@@ -99,3 +99,4 @@ extra:
       - 'Grant Number ...'
     links:
       - name: Contact
+        link: mailto:ds-support@fz-juelich.de?subject=JupyterLab DataMount
