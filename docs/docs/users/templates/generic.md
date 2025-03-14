@@ -12,7 +12,7 @@ To configure a Generic mount, the following parameters are required:
 - Add more options. Check out the rclone [documentation](https://rclone.org/docs/) for all options.
 
 <div style="text-align: center;">
-  <img src="images/generic.png" alt="Generic" style="width: 30%;">
+  <img src="../images/generic.png" alt="Generic" style="width: 30%;">
 </div>
 
 ## Advanced
