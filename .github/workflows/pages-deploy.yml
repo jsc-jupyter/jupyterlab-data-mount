@@ -3,7 +3,7 @@ name: Deploy MkDocs
 on:
   push:
     branches:
-      - main # Change this to your default branch
+      - docs
 
 permissions:
   contents: write # Grant the workflow write access to push to gh-pages
