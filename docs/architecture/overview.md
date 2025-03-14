@@ -5,13 +5,13 @@
 The JupyterLab DataMount Extension integrates external storage seamlessly into Jupyter environments using a sidecar container approach. Below is an overview of the architecture:
 
 <div style="text-align: center;">
-  <img src="../images/architecture_overview.svg" alt="Architecture" style="width: 70%;">
+  <img src="https://jsc-jupyter.github.io/jupyterlab-data-mount/images/architecture_overview.svg" alt="Architecture" style="width: 70%;">
 </div>
 
 <details>
 <summary>Architecture with additional information: </summary>
 <div style="text-align: center;">
-  <img src="../images/architecture_overview_details.svg" alt="Architecture" style="width: 90%;">
+  <img src="https://jsc-jupyter.github.io/jupyterlab-data-mount/images/architecture_overview_details.svg" alt="Architecture" style="width: 90%;">
 </div>
 </details>
 

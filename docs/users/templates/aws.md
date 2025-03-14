@@ -9,7 +9,7 @@ The **AWS** template allows users to mount their Amazon Web Service S3 Bucket wi
 - An Amazon S3 Storage Object. The setup process is not covered in this documentation, you can learn more about it [here](https://aws.amazon.com/s3/).
 
  <div style="text-align: center;">
-  <img src="../../images/awsbucket.png" alt="AWS Bucket" style="width: 80%;">
+  <img src="https://jsc-jupyter.github.io/jupyterlab-data-mount/images/awsbucket.png" alt="AWS Bucket" style="width: 80%;">
 </div>
 
 ## Configuration Parameters
@@ -22,7 +22,7 @@ To configure an AWS mount, the following parameters are required:
 - **Password**: AWS Secret Access Key.
 
 <div style="text-align: center;">
-  <img src="../../images/aws.png" alt="AWS" style="width: 30%;">
+  <img src="https://jsc-jupyter.github.io/jupyterlab-data-mount/images/aws.png" alt="AWS" style="width: 30%;">
 </div>
 
 ## Advanced
