@@ -4,12 +4,13 @@
 [![PyPI](https://img.shields.io/badge/PyPI-passed-green)](https://pypi.org/project/jupyterlab-data-mount/)
 [![npm](https://img.shields.io/badge/npm-passed-green)](https://www.npmjs.com/package/jupyterlab-data-mount)
 
-
 A JupyterLab extension to mount external data storage locations.
 
 This extension is composed of a Python package named `jupyterlab_data_mount`
 for the server extension and a NPM package named `jupyterlab-data-mount`
 for the frontend extension.
+
+![JupyterLab](https://jsc-jupyter.github.io/jupyterlab-data-mount/images/jupyterlab.png)
 
 ## Requirements
 
