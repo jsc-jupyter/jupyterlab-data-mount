@@ -44,13 +44,14 @@ nav:
           - S3-Compatible Storage: users/templates/s3.md
           - WebDAV: users/templates/webdav.md
           - Generic Storage: users/templates/generic.md
-      - Troubleshooting & FAQ: users/faq.md
+      - Troubleshooting: users/issues.md
   - Architecture:
       - Overview: architecture/overview.md
       - Backend API: architecture/backend_api.md
   - JupyterHub Spawner:
       - Installation: spawner/installation.md
       - Configuration: spawner/configuration.md
+  - Contributing: contributing.md
 
 plugins:
   - social
