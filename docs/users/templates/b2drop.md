@@ -12,6 +12,8 @@ For a safe mount of B2Drop an **app password** is required.
 2.  Scroll down, enter "JupyterLab DataMount" as "App name" and click on "Create new app password"
 3.  Save "Login" ( aka **user** ) and "Password"
 
+> Clicking on "Create new app password" does not do anything? Try using a different browser.
+
 <div style="text-align: center;">
   <img src="https://jsc-jupyter.github.io/jupyterlab-data-mount/images/b2drop_apppassword.png" alt="B2Drop AppPassword" style="width: 30%;">
 </div>
