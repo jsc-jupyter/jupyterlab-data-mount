@@ -5,7 +5,7 @@
 The **JupyterLab DataMount** extension is designed to provide seamless access to external storage services directly within JupyterLab. By integrating multiple storage backends, it allows users to mount and interact with remote data effortlessly. The extension is especially useful for researchers and data analysts who need quick and secure access to large datasets.
 
 <div style="text-align: center;">
-  <img src="images/aws.png" alt="Mountlist" style="width: 30%;">
+  <img src="images/jupyterlab.png" alt="JupyterLab" style="width: 70%;">
 </div>
 
 ## Why Use JupyterLab DataMount?
