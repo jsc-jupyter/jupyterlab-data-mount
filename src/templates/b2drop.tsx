@@ -21,7 +21,7 @@ interface IB2DropProps {
 
 export default class B2Drop extends BaseComponent<IB2DropProps, IB2DropState> {
   private tooltips = {
-    remotepath: '',
+    remotepath: 'Path in B2Drop to mount. "/" mounts all of your B2Drop files',
     user: 'User name or App name',
     obscure_pass: 'Password or App password'
   };
@@ -77,6 +77,14 @@ export default class B2Drop extends BaseComponent<IB2DropProps, IB2DropState> {
         <div className="row mb-1 data-mount-dialog-config-header">
           <p>B2Drop Configuration</p>
         </div>
+        <TextField
+          label="Path"
+          name="remotepath"
+          tooltip={this.tooltips.remotepath}
+          value={this.state.remotepath}
+          editable={this.props.editable}
+          onChange={this.handleTextFieldChange}
+        />
         <TextField
           label="User"
           name="user"
