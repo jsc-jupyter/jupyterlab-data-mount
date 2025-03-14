@@ -15,7 +15,7 @@ To configure a WebDAV mount, the following parameters are required:
 - **Bearer Token**: Bearer token instead of user/pass (e.g. a Macaroon)
 
 <div style="text-align: center;">
-  <img src="../images/webdav.png" alt="WebDAV" style="width: 30%;">
+  <img src="../../images/webdav.png" alt="WebDAV" style="width: 30%;">
 </div>
 
 ## Advanced

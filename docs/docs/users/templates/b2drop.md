@@ -13,7 +13,7 @@ For a safe mount of B2Drop an **app password** is required.
 3.  Save "Login" ( aka **user** ) and "Password"
 
 <div style="text-align: center;">
-  <img src="../images/b2drop_apppassword.png" alt="B2Drop AppPassword" style="width: 30%;">
+  <img src="../../images/b2drop_apppassword.png" alt="B2Drop AppPassword" style="width: 30%;">
 </div>
 
 ## Configuration Parameters
@@ -25,7 +25,7 @@ To configure a B2Drop mount, the following parameters are required:
 - **Password**: "Password" from the app password.
 
 <div style="text-align: center;">
-  <img src="../images/b2drop.png" alt="B2Drop" style="width: 30%;">
+  <img src="../../images/b2drop.png" alt="B2Drop" style="width: 30%;">
 </div>
 
 ## Advanced
