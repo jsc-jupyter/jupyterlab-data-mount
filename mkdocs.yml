@@ -21,7 +21,7 @@ theme:
   font:
     text: Fira Sans
     code: Roboto Mono
-    icon: 'mdi'
+    icon: "mdi"
   favicon: images/jupyter-cloud-storage-icon.svg
   custom_dir: docs/custom
   palette:
@@ -83,7 +83,7 @@ extra_css:
   - css/extra.css
 
 extra:
-  logo: 'images/logo.png'
+  logo: "images/logo.png"
   generator: false
   social:
     - icon: fontawesome/brands/github
@@ -95,8 +95,8 @@ extra:
     copyright: |
       &copy; 2025 Forschungszentrum Jülich
     lines:
-      - 'Partially funded by ...'
-      - 'Grant Number ...'
+      - "Partially funded by ..."
+      - "Grant Number ..."
     links:
       - name: Contact
         link: mailto:ds-support@fz-juelich.de?subject=JupyterLab DataMount
