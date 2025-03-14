@@ -20,7 +20,7 @@ export default class SideBarHeader extends React.Component<{
             data-tooltip-html="Click for documentation"
             data-tooltip-place="left"
             className="data-mount-sidepanel-header-documentation lh-1 ms-auto data-mount-dialog-label-tooltip"
-            href="https://www.google.com"
+            href="https://jsc-jupyter.github.io/jupyterlab-data-mount/"
             target="_blank"
           >
             <svg

@@ -133,7 +133,7 @@ export default class Generic extends BaseComponent<
                 data-tooltip-html="Click for documentation"
                 data-tooltip-place="left"
                 className="data-mount-generic-tooltip lh-1 ms-1 data-mount-dialog-label-tooltip"
-                href="https://www.google.com"
+                href="https://jsc-jupyter.github.io/jupyterlab-data-mount/users/templates/generic/"
                 target="_blank"
               >
                 <svg

@@ -88,7 +88,7 @@ export class MountDialogComponent extends React.Component<
     },
     {
       value: 'webdav',
-      label: 'Webdav'
+      label: 'WebDAV'
     },
     {
       value: 'generic',
