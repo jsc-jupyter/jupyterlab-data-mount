@@ -27,7 +27,7 @@ class DataMount(Configurable):
     )
 
     mount_dir = Unicode(
-        os.environ.get("JUPYTERLAB_DATA_MOUNT_DIR", "/mnt/data_mounts"),
+        os.environ.get("JUPYTERLAB_DATA_MOUNT_DIR", "/home/jovyan/data_mounts"),
         config=True,
         help=(
             """
@@ -116,7 +116,10 @@ class DataMountHandler(APIHandler):
                     request = HTTPRequest(
                         self.api_url, method="GET", headers=self.headers
                     )
-                    response = await self.fetch(request)
+                    if option == "init":
+                        response = await self.fetch(request)
+                    else:
+                        response = await self.client.fetch(request)
                     backend_list = json.loads(response.body.decode("utf-8"))
                     frontend_list = []
                     for item in backend_list:
@@ -135,23 +138,26 @@ class DataMountHandler(APIHandler):
 
                     self.finish(json.dumps(frontend_list))
                 except Exception as e:
+                    self.log.exception("DataMount - List failed")
                     self.set_status(400)
                     self.finish(str(e))
 
     @web.authenticated
     async def delete(self, path):
-        path = path.lstrip(f"{self.mount_dir}/")
+        path = path.replace(f"{self.mount_dir}/", "", 1)
         url = url_path_join(self.api_url, path)
         try:
             request = HTTPRequest(url, method="DELETE", headers=self.headers)
-            await self.fetch(request)
+            await self.client.fetch(request)
             self.set_status(204)
         except HTTPClientError as e:
+            self.log.exception("DataMount - Delete failed")
             self.set_status(400)
             if e.response:  # Check if a response exists
                 error_body = json.loads(e.response.body.decode())
                 self.finish(json.dumps(error_body.get("detail", str(e))))
         except Exception as e:
+            self.log.exception("DataMount - Delete failed")
             self.set_status(400)
             self.finish(str(e))
 
@@ -164,9 +170,8 @@ class DataMountHandler(APIHandler):
         config = frontend_dict.get("options", {})
         readonly = config.pop("readonly", False)
         display_name = config.pop("displayName", template)
-
         backend_dict = {
-            "path": path.lstrip(f"{self.mount_dir}/"),
+            "path": path.replace(f"{self.mount_dir}/", "", 1),
             "options": {
                 "displayName": display_name,
                 "template": template,
@@ -181,10 +186,10 @@ class DataMountHandler(APIHandler):
                 method="POST",
                 body=json.dumps(backend_dict),
                 headers=self.headers,
-                request_timeout=60.0,
             )
-            await self.fetch(request)
+            await self.client.fetch(request)
         except Exception as e:
+            self.log.exception("DataMount - -Post failed")
             self.set_status(400)
 
 

@@ -47,9 +47,10 @@ class SideBarComponent extends React.Component<
     };
   }
 
-  async reloadMountPoints() {
+  async reloadMountPoints(path: string) {
     try {
-      const mountPoints: IDataMount[] = await listAllMountpoints();
+      const mountPoints: IDataMount[] = await listAllMountpoints(path);
+      console.log('Set GlobalLoading #1');
       this.setState({
         mountPoints,
         globalLoading: false
@@ -60,7 +61,7 @@ class SideBarComponent extends React.Component<
   }
 
   async componentDidMount() {
-    await this.reloadMountPoints();
+    await this.reloadMountPoints('init');
   }
 
   setMountPointLoaded(mountPoint: IDataMount) {

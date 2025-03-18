@@ -46,10 +46,10 @@ export async function requestAPI<T>(
   return data;
 }
 
-export async function listAllMountpoints(): Promise<IDataMount[]> {
+export async function listAllMountpoints(path: string): Promise<IDataMount[]> {
   let mountPoints: IDataMount[] = [];
   try {
-    const data = await requestAPI<any>('');
+    const data = await requestAPI<any>(path);
     mountPoints = data;
   } catch (reason) {
     console.error(`Data Mount: Could not receive MountPoints.\n${reason}`);
