@@ -20,8 +20,8 @@ The JupyterLab DataMount Extension integrates external storage seamlessly into J
 - The **rclone sidecar container** requires **mountPropagation: Bidirectional**, which enables proper propagation of mounted storage.
 - The **Jupyter container** only needs **mountPropagation: HostToContainer**, ensuring that it can access mounts without additional privileges.
 - To support this mechanism:
-  - The **mount container** runs as `root` with `privileged: true` to handle mounting securely.
-  - The **Jupyter container** operates as the `jovyan` user with no extra privileges, ensuring security by design.
+    - The **mount container** runs as `root` with `privileged: true` to handle mounting securely.
+    - The **Jupyter container** operates as the `jovyan` user with no extra privileges, ensuring security by design.
 
 This architecture ensures that administrators do not need to grant additional permissions to enable the JupyterLab DataMount Extension.
 
