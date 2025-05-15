@@ -26,7 +26,7 @@ class DataMount(Configurable):
     )
 
     mount_dir = Unicode(
-        os.environ.get("JUPYTERLAB_DATA_MOUNT_DIR", "/home/jovyan/data_mounts"),
+        os.environ.get("JUPYTERLAB_DATA_MOUNT_DIR", "data_mounts"),
         config=True,
         help=(
             """
@@ -56,9 +56,6 @@ class DataMount(Configurable):
         """
         ),
     )
-
-    def test_access_token():
-        return "eyJraWQiOiI0NjUzMzcwNjY3Njk4OTc4NjM2NzA1Njc5Njg2NDA0NjQ0MzA1ODI1MTIyNjc4NjAiLCJ0eXAiOiJhdCtqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlODA2YTQwOC1kZGQwLTRjYWYtODljZC00NGNjZTliMGUyZWQiLCJhdWQiOiJqdXB5dGVyanNjLXByb2R1Y3Rpb24iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGVkdXBlcnNvbl9hc3N1cmFuY2Ugc2luZ2xlLWxvZ291dCB2b3BlcnNvbl9pZCBlbnRpdGxlbWVudHMiLCJpc3MiOiJodHRwczpcL1wvbG9naW4uanNjLmZ6LWp1ZWxpY2guZGVcL29hdXRoMiIsImV4cCI6MTc0NzMxMDg0NywiaWF0IjoxNzQ3MzA2ODQ3LCJqdGkiOiI4ZTM1N2JiYS1lZGE5LTQ4NzctYjFlMi1mZjJiYTA3OGNhMDUiLCJjbGllbnRfaWQiOiJqdXB5dGVyanNjLXByb2R1Y3Rpb24ifQ.g2WsJWwaF5CpJbi4RwkSK88_VVo_0dhluy6jMXWVNInd_thovSS-h4ilA-8Qg4NGTwKgEIbJ7RDWPPOduXPYm4EQC4GyOzEEfF4_-UdN_RgZ_Dd-_iI4ZUJGR9UvzyMwOUXBT68PmpGkfp7VeaZP_6mXvuxtMkXuBOb5N7Meoe6PCEaZj63PW5B8-Ivpf0tR4866-hyOaaB_7CmcUntjHn2BxjJVnpRAYvNObBTkHY0q8BbuPXXi2r_ypvKl4zn270xKcgUxATsp-4e8MrUiujQUG6zFeon69iN4PqiU_0deeHzPdgUui18gHRo3KPzsCx_FWGHSpOsa_FUrgGO3h82kn3E8E2DiBo3jRJVcFODGRLcrW9OkGedtttxEDwcr1EAfG0AKV91Bc0bzl9v1gcOXkdTmirB8KZNoBK3M4eFxdrCfM4vOZIzNR-gaYhCVcTfHrcdFId2PnbGTdPVmJEyYeXBeTaMe6IDfSZIzJiZEHjB2PcZ2zPtpkgNabPWX9MduB3Irvi3p8IiNaBP-Uy5PE_vojsTWPSR95h1_XNUzDOJ-pkY_7j_Jk0OzsoG0Y716MG8TkeXZJSwi-C7WGcY9Fz0IatfsSQacIg4poXHuPPSuj6XuehbwLLtlSJ2wLlb75nQdQDgaxNOvnrRP4NTJ2vYWorhE-3_JGH9oe5Y"
 
     uftp_access_token = Any(
         default_value=None,
@@ -319,7 +316,7 @@ class DataMountHandler(APIHandler):
             )
             await self.client.fetch(request)
         except Exception as e:
-            self.log.exception("DataMount - -Post failed")
+            self.log.exception("DataMount - Post failed")
             self.set_status(400)
 
 
