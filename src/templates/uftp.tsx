@@ -128,7 +128,7 @@ export default class UFTP extends BaseComponent<IUFTPProps, IUFTPState> {
             searchable={true}
           />
         )}
-        {this.state.remotepath == '__custom__path__' && (
+        {this.state.remotepath === '__custom__path__' && (
           <TextField
             label="Directory"
             name="custompath"
