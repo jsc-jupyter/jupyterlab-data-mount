@@ -4,19 +4,20 @@ import { IDropdownValues, DropdownComponent } from '../components/dropdown';
 import { TextField } from '../components/textfield';
 import Checkbox from '../components/checkbox';
 
-import { IDataMount } from '../index';
+import { IDataMount, IUFTPConfig } from '../index';
 import B2Drop from '../templates/b2drop';
 import AWS from '../templates/aws';
 import S3 from '../templates/s3';
 import Webdav from '../templates/webdav';
 import Generic from '../templates/generic';
-
+import UFTP from '../templates/uftp';
 export class MountDialogBody extends ReactWidget {
   private mountcomponent_ref: any;
   private editable: boolean;
   private options: any;
   private templates: string[];
   private mountDir: string;
+  private uftp_config: IUFTPConfig;
 
   getValue(): IDataMount {
     try {
@@ -47,7 +48,8 @@ export class MountDialogBody extends ReactWidget {
     editable: boolean | false,
     options: any,
     templates: string[],
-    mountDir: string
+    mountDir: string,
+    uftp_config: IUFTPConfig
   ) {
     super();
     this.editable = editable;
@@ -55,6 +57,7 @@ export class MountDialogBody extends ReactWidget {
     this.templates = templates;
     this.mountDir = mountDir;
     this.mountcomponent_ref = React.createRef();
+    this.uftp_config = uftp_config;
   }
   render() {
     return (
@@ -64,6 +67,7 @@ export class MountDialogBody extends ReactWidget {
         options={this.options}
         templates={this.templates}
         mountDir={this.mountDir}
+        uftp_config={this.uftp_config}
       />
     );
   }
@@ -74,7 +78,13 @@ interface IMountDialogComponentState {
 }
 
 export class MountDialogComponent extends React.Component<
-  { editable: boolean; options: any; templates: string[]; mountDir: string },
+  {
+    editable: boolean;
+    options: any;
+    templates: string[];
+    mountDir: string;
+    uftp_config: IUFTPConfig;
+  },
   IMountDialogComponentState
 > {
   private template_ref: any;
@@ -93,6 +103,10 @@ export class MountDialogComponent extends React.Component<
     {
       value: 'generic',
       label: 'Generic'
+    },
+    {
+      value: 'uftp',
+      label: 'UFTP'
     }
   ];
 
@@ -183,6 +197,7 @@ export class MountDialogComponent extends React.Component<
     options: any;
     templates: string[];
     mountDir: string;
+    uftp_config: IUFTPConfig;
   }) {
     super(props);
     this.template_ref = React.createRef();
@@ -214,6 +229,12 @@ export class MountDialogComponent extends React.Component<
         );
     } else {
       this.templates = [...this.templates_all]; // Default to all templates if none are provided
+    }
+
+    if (props.uftp_config?.name) {
+      this.templates = this.templates.map(t =>
+        t.value === 'uftp' ? { ...t, label: props.uftp_config.name } : t
+      );
     }
 
     this.handleTemplateChange = this.handleTemplateChange.bind(this);
@@ -289,6 +310,15 @@ export class MountDialogComponent extends React.Component<
             ref={this.template_ref}
             editable={this.props.editable}
             options={this.state.datamount.options}
+          />
+        )}
+        {template === 'uftp' && (
+          <UFTP
+            onValueChange={this.handleOptionChange}
+            ref={this.template_ref}
+            editable={this.props.editable}
+            options={this.state.datamount.options}
+            config={this.props.uftp_config}
           />
         )}
       </>

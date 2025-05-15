@@ -6,7 +6,7 @@ import { Dialog, showDialog } from '@jupyterlab/apputils';
 import { MountDialogBody } from '../dialog/widget';
 
 import { PageConfig } from '@jupyterlab/coreutils';
-import { IDataMount } from '../index';
+import { IDataMount, IUFTPConfig } from '../index';
 
 export default class SideBarBody extends React.Component<{
   app: JupyterFrontEnd;
@@ -17,6 +17,7 @@ export default class SideBarBody extends React.Component<{
   loading: boolean;
   mountPoints: IDataMount[];
   removeMountPoint: (mountPoint: IDataMount) => void;
+  uftp_config: IUFTPConfig;
 }> {
   constructor(props: any) {
     super(props);
@@ -37,6 +38,7 @@ export default class SideBarBody extends React.Component<{
               templates={this.props.templates}
               mountDir={this.props.mountDir}
               removeMountPoint={this.props.removeMountPoint}
+              uftp_config={this.props.uftp_config}
             />
           ))}
         </ul>
@@ -51,6 +53,7 @@ class MountRowElement extends React.Component<{
   templates: string[];
   mountDir: string;
   removeMountPoint: (mountPoint: IDataMount) => void;
+  uftp_config: IUFTPConfig;
 }> {
   constructor(props: any) {
     super(props);
@@ -73,7 +76,8 @@ class MountRowElement extends React.Component<{
       false,
       options,
       this.props.templates,
-      this.props.mountDir
+      this.props.mountDir,
+      this.props.uftp_config
     );
 
     body.node.style.overflow = 'visible';

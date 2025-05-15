@@ -29,6 +29,7 @@ div:has(> .data-mount-dialog-body) {
 .data-mount-dialog-options {
   overflow-y: scroll;
   padding-right: 1em;
+  padding-bottom: 100px;
 }
 
 .icon-button {

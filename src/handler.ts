@@ -2,7 +2,7 @@ import { URLExt } from '@jupyterlab/coreutils';
 
 import { ServerConnection } from '@jupyterlab/services';
 
-import { IDataMount } from './index';
+import { IDataMount, IUFTPConfig } from './index';
 
 /**
  * Call the API extension
@@ -70,7 +70,7 @@ export async function RequestAddMountPoint(mountPoint: IDataMount) {
   }
 }
 
-export async function RequestGetTemplates() {
+export async function RequestGetTemplates(): Promise<[]> {
   let data = [];
   try {
     data = await requestAPI<any>('templates', {
@@ -92,6 +92,20 @@ export async function RequestGetMountDir() {
     });
   } catch (reason) {
     data = ['aws', 'b2drop', 's3', 'webdav', 'generic'];
+    console.error(`Data Mount: Could not get templates.\n${reason}`);
+    throw new Error(`Failed to get templates.\n${reason}`);
+  }
+  return data;
+}
+
+export async function RequestGetUFTPConfig(): Promise<IUFTPConfig> {
+  let data: IUFTPConfig;
+  try {
+    data = await requestAPI<any>('uftp', {
+      method: 'GET'
+    });
+  } catch (reason) {
+    data = { name: 'UFTP', allowed_dirs: [], auth_values: [] };
     console.error(`Data Mount: Could not get templates.\n${reason}`);
     throw new Error(`Failed to get templates.\n${reason}`);
   }

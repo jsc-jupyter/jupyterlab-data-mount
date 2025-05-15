@@ -4,6 +4,7 @@ import { Dialog, showDialog } from '@jupyterlab/apputils';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import SideBarWidget from './sidebar/widget';
 import { RequestAddMountPoint } from './handler';
+import { IUFTPConfig } from '.';
 
 export namespace CommandIDs {
   export const opendialog = 'jupyterlab-data-mount:opendialog';
@@ -13,7 +14,8 @@ export function addCommands(
   app: JupyterFrontEnd,
   sbwidget: SideBarWidget,
   templates: string[],
-  mountDir: string
+  mountDir: string,
+  uftp_config: IUFTPConfig
 ) {
   app.commands.addCommand(CommandIDs.opendialog, {
     label: args => 'Open Data Mount',
@@ -25,7 +27,13 @@ export function addCommands(
         Dialog.okButton({ label: 'Mount' })
       ];
 
-      const body = new MountDialogBody(true, {}, templates, mountDir);
+      const body = new MountDialogBody(
+        true,
+        {},
+        templates,
+        mountDir,
+        uftp_config
+      );
       body.node.style.overflow = 'visible';
       body.node.className = 'data-mount-dialog-body';
       showDialog({
