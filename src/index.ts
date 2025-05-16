@@ -8,8 +8,9 @@ import { ICommandPalette } from '@jupyterlab/apputils';
 import { SideBarWidget } from './sidebar/widget';
 
 import {
-  RequestGetTemplates,
+  RequestGetEnabled,
   RequestGetMountDir,
+  RequestGetTemplates,
   RequestGetUFTPConfig
 } from './handler';
 
@@ -47,35 +48,40 @@ async function activate(
   app: JupyterFrontEnd,
   palette: ICommandPalette
 ): Promise<void> {
-  console.log('JupyterLab extension jupyterlab-data-mount is activated!');
-  const templates = await RequestGetTemplates();
-  const mountDir = await RequestGetMountDir();
-  const uftpTemplate = templates.find(t => t === 'uftp');
-  let uftp_config: IUFTPConfig = {
-    name: '',
-    allowed_dirs: [],
-    auth_values: []
-  };
-  if (uftpTemplate) {
-    uftp_config = await RequestGetUFTPConfig();
+  const enabled = await RequestGetEnabled();
+  if (enabled) {
+    console.log('JupyterLab extension jupyterlab-data-mount is activated!');
+    const templates = await RequestGetTemplates();
+    const mountDir = await RequestGetMountDir();
+    const uftpTemplate = templates.find(t => t === 'uftp');
+    let uftp_config: IUFTPConfig = {
+      name: '',
+      allowed_dirs: [],
+      auth_values: []
+    };
+    if (uftpTemplate) {
+      uftp_config = await RequestGetUFTPConfig();
+    }
+
+    const sbwidget = new SideBarWidget(
+      app,
+      app.commands,
+      CommandIDs.opendialog,
+      templates,
+      mountDir,
+      uftp_config
+    );
+    app.shell.add(sbwidget, 'left');
+    app.shell.activateById(sbwidget.id);
+    addCommands(app, sbwidget, templates, mountDir, uftp_config);
+
+    palette.addItem({
+      command: CommandIDs.opendialog,
+      category: 'Data'
+    });
+  } else {
+    console.log('JupyterLab extension jupyterlab-data-mount is not activated!');
   }
-
-  const sbwidget = new SideBarWidget(
-    app,
-    app.commands,
-    CommandIDs.opendialog,
-    templates,
-    mountDir,
-    uftp_config
-  );
-  app.shell.add(sbwidget, 'left');
-  app.shell.activateById(sbwidget.id);
-  addCommands(app, sbwidget, templates, mountDir, uftp_config);
-
-  palette.addItem({
-    command: CommandIDs.opendialog,
-    category: 'Data'
-  });
 }
 
 export default plugin;

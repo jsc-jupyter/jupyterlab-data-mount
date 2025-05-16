@@ -220,6 +220,8 @@ class DataMountHandler(APIHandler):
             )
         elif option == "mountdir":
             self.finish(json.dumps(self.mount_dir))
+        elif option == "enabled":
+            self.finish(str(self.enabled).lower())
         else:
             if not self.enabled:
                 self.set_status(200)

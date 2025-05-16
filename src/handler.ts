@@ -70,6 +70,19 @@ export async function RequestAddMountPoint(mountPoint: IDataMount) {
   }
 }
 
+export async function RequestGetEnabled(): Promise<Boolean> {
+  let data = false;
+  try {
+    data = await requestAPI<any>('enabled', {
+      method: 'GET'
+    });
+  } catch (reason) {
+    data = false;
+    console.error(`Data Mount: Could not get enable status.\n${reason}`);
+  }
+  return data;
+}
+
 export async function RequestGetTemplates(): Promise<[]> {
   let data = [];
   try {
