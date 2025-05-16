@@ -70,7 +70,7 @@ export async function RequestAddMountPoint(mountPoint: IDataMount) {
   }
 }
 
-export async function RequestGetEnabled(): Promise<Boolean> {
+export async function RequestGetEnabled(): Promise<boolean> {
   let data = false;
   try {
     data = await requestAPI<any>('enabled', {
