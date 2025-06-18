@@ -96,8 +96,8 @@ extra:
     copyright: |
       &copy; 2025 Forschungszentrum Jülich
     lines:
-      - "Partially funded by ..."
-      - "Grant Number ..."
+      - "Partially funded by EOSC Beyond."
+      - "Grant Number 101131875."
     links:
       - name: Contact
         link: mailto:ds-support@fz-juelich.de?subject=JupyterLab DataMount
