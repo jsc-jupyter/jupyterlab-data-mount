@@ -145,7 +145,7 @@ export async function RequestRemoveMountPoint(mountPoint: IDataMount) {
     } else {
       showDialog({
         title: 'Data Mount',
-        body: `Check mount.log for more information.`,
+        body: 'Check mount.log for more information.',
         buttons: [Dialog.okButton({ label: 'Ok' })]
       });
       console.error('Failed to delete mount point.');
