@@ -96,7 +96,7 @@ export default class UFTP extends BaseComponent<IUFTPProps, IUFTPState> {
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                fill="currentColor"
+                fill="var(--jp-ui-font-color1)"
                 className="bi bi-info-circle"
                 viewBox="0 0 16 16"
                 style={{ verticalAlign: 'sub' }}
