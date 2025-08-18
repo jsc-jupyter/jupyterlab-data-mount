@@ -83,6 +83,11 @@ export default class Checkbox extends Component<
                   color="primary"
                   checked={checked}
                   onChange={this.handleChange}
+                  className={
+                    this.props.editable
+                      ? 'data-mount-checkbox'
+                      : 'data-mount-checkbox-disabled'
+                  }
                   inputProps={{ 'aria-label': 'controlled' }}
                   disabled={!this.props.editable}
                 />

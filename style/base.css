@@ -112,11 +112,11 @@ div:has(> .data-mount-dialog-body) {
   color: var(--jp-ui-font-color1);
 }
 
-.MuiCheckbox-colorPrimary:not(.Mui-disabled) {
+.data-mount-checkbox {
   color: var(--jp-ui-font-color1) !important;
 }
 
-.Mui-disabled {
+.data-mount-checkbox-disabled {
   color: var(--bs-secondary-bg) !important;
 }
 
