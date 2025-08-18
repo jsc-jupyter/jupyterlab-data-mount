@@ -1,3 +1,5 @@
+import { Dialog, showDialog } from '@jupyterlab/apputils';
+
 import { URLExt } from '@jupyterlab/coreutils';
 
 import { ServerConnection } from '@jupyterlab/services';
@@ -134,9 +136,19 @@ export async function RequestRemoveMountPoint(mountPoint: IDataMount) {
     });
   } catch (reason) {
     if (reason) {
-      throw new Error(`${reason}`);
+      showDialog({
+        title: 'Data Mount',
+        body: `${reason}`,
+        buttons: [Dialog.okButton({ label: 'Ok' })]
+      });
+      console.error(`${reason}`);
     } else {
-      throw new Error('Failed to delete mount point.');
+      showDialog({
+        title: 'Data Mount',
+        body: 'Check mount.log for more information.',
+        buttons: [Dialog.okButton({ label: 'Ok' })]
+      });
+      console.error('Failed to delete mount point.');
     }
   }
 }
