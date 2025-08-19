@@ -38,7 +38,7 @@ class DataMount(Configurable):
 
     templates = Any(
         default_value=os.environ.get(
-            "JUPYTERLAB_DATA_MOUNT_TEMPLATES", "uftp,b2drop,aws,s3,webdav,generic"
+            "JUPYTERLAB_DATA_MOUNT_TEMPLATES", "uftp,b2drop,aws,s3,webdav,nfs,generic"
         ).split(","),
         config=True,
         help=(
@@ -50,6 +50,7 @@ class DataMount(Configurable):
                 - s3
                 - uftp
                 - webdav
+                - nfs
                 - generic
 
                 Can be a callable function.

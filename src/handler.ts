@@ -92,7 +92,7 @@ export async function RequestGetTemplates(): Promise<[]> {
       method: 'GET'
     });
   } catch (reason) {
-    data = ['aws', 'b2drop', 's3', 'webdav', 'generic'];
+    data = ['aws', 'b2drop', 's3', 'webdav', 'nfs', 'generic'];
     console.error(`Data Mount: Could not get templates.\n${reason}`);
     throw new Error(`Failed to get templates.\n${reason}`);
   }
@@ -121,7 +121,7 @@ export async function RequestGetMountDir() {
       method: 'GET'
     });
   } catch (reason) {
-    data = ['aws', 'b2drop', 's3', 'webdav', 'generic'];
+    data = ['aws', 'b2drop', 's3', 'webdav', 'nfs', 'generic'];
     console.error(`Data Mount: Could not get templates.\n${reason}`);
     throw new Error(`Failed to get templates.\n${reason}`);
   }

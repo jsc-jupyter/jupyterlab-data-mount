@@ -7,6 +7,7 @@ import Checkbox from '../components/checkbox';
 import { IDataMount, IRememberConfig, IUFTPConfig } from '../index';
 import B2Drop from '../templates/b2drop';
 import AWS from '../templates/aws';
+import NFS from '../templates/nfs';
 import S3 from '../templates/s3';
 import Webdav from '../templates/webdav';
 import Generic from '../templates/generic';
@@ -105,6 +106,10 @@ export class MountDialogComponent extends React.Component<
     {
       value: 'webdav',
       label: 'WebDAV'
+    },
+    {
+      value: 'nfs',
+      label: 'NFS'
     },
     {
       value: 'generic',
@@ -346,6 +351,14 @@ export class MountDialogComponent extends React.Component<
         )}
         {template === 'webdav' && (
           <Webdav
+            onValueChange={this.handleOptionChange}
+            ref={this.template_ref}
+            editable={this.props.editable}
+            options={this.state.datamount.options}
+          />
+        )}
+        {template === 'nfs' && (
+          <NFS
             onValueChange={this.handleOptionChange}
             ref={this.template_ref}
             editable={this.props.editable}
