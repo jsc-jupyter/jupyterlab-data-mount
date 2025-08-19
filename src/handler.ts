@@ -4,7 +4,7 @@ import { URLExt } from '@jupyterlab/coreutils';
 
 import { ServerConnection } from '@jupyterlab/services';
 
-import { IDataMount, IUFTPConfig } from './index';
+import { IDataMount, IRememberConfig, IUFTPConfig } from './index';
 
 /**
  * Call the API extension
@@ -95,6 +95,21 @@ export async function RequestGetTemplates(): Promise<[]> {
     data = ['aws', 'b2drop', 's3', 'webdav', 'generic'];
     console.error(`Data Mount: Could not get templates.\n${reason}`);
     throw new Error(`Failed to get templates.\n${reason}`);
+  }
+  return data;
+}
+
+export async function RequestGetRememberConfig(): Promise<IRememberConfig> {
+  let data: IRememberConfig;
+  try {
+    data = await requestAPI<any>('remember', {
+      method: 'GET'
+    });
+  } catch (reason) {
+    data = { path: '/home/jovyan', default: false, enabled: false };
+    console.error(
+      `Data Mount: Could not get remember path.\n${reason}\nUse /home/jovyan instead.`
+    );
   }
   return data;
 }

@@ -8,7 +8,7 @@ from tornado import web
 from tornado.httpclient import AsyncHTTPClient, HTTPClientError, HTTPRequest
 
 from traitlets.config import Configurable
-from traitlets import Any, Bool, Unicode, List
+from traitlets import Any, Bool, Unicode
 
 
 class DataMount(Configurable):
@@ -30,8 +30,8 @@ class DataMount(Configurable):
         config=True,
         help=(
             """
-        The directory which is shared with the DataMountAPI. Create a symlink
-        from new mount directory to user chosen directory.
+            The directory which is shared with the DataMountAPI. Create a symlink
+            from new mount directory to user chosen directory.
         """
         ),
     )
@@ -43,17 +43,68 @@ class DataMount(Configurable):
         config=True,
         help=(
             """
-          Templates that should be shown in the frontend.
-          Available Templates:
-            - aws
-            - b2drop
-            - s3
-            - uftp
-            - webdav
-            - generic
+            Templates that should be shown in the frontend.
+            Available Templates:
+                - aws
+                - b2drop
+                - s3
+                - uftp
+                - webdav
+                - generic
 
-            Can be a callable function.
+                Can be a callable function.
         """
+        ),
+    )
+
+    remember_file = Unicode(
+        os.environ.get(
+            "JUPYTERLAB_DATA_MOUNT_REMEMBER_FILE",
+            os.path.join(
+                os.environ.get("HOME", "/home/jovyan"),
+                ".jupyter",
+                "datamount",
+                "mounts.json",
+            ),
+        ),
+        config=True,
+        help=(
+            """
+            File used by the JupyterLab DataMount App to store mounts.
+            By default, this is set to ~/.jupyter/datamount/mounts.json. Must be in a user persistent storage path.
+            Otherwise stored mounts will be lost after restarting JupyterLab.
+            """
+        ),
+    )
+
+    remember_enabled = Bool(
+        os.environ.get("JUPYTERLAB_DATA_MOUNT_REMEMBER_ENABLED", "false").lower()
+        in ["1", "true"],
+        config=True,
+        help=(
+            """
+            Enable or disable the "remember mounts" feature.
+
+            If enabled, users can choose to persist their mounts across JupyterLab restarts.
+            Mount configurations (including credentials) will be stored on disk in the
+            directory defined by `remember_file`.
+
+            If disabled, the option to remember mounts is hidden from the UI and no mount
+            information will be persisted.
+            """
+        ),
+    )
+
+    remember_default = Bool(
+        os.environ.get("JUPYTERLAB_DATA_MOUNT_REMEMBER_DEFAULT", "false").lower()
+        in ["1", "true"],
+        True,
+        config=True,
+        help=(
+            """
+            Whether the 'Remember mount' checkbox should be enabled by default
+            when creating a new mount.
+            """
         ),
     )
 
@@ -133,6 +184,9 @@ class DataMountHandler(APIHandler):
     templates = []
     enabled = False
     api_url = None
+    remember_file = None
+    remember_default = False
+    remember_enabled = False
     mount_dir = None
     client = None
     uftp_allowed_dirs = []
@@ -174,6 +228,9 @@ class DataMountHandler(APIHandler):
         self.enabled = self.c.enabled
         self.api_url = f"{self.c.api_url.rstrip('/')}/"
         self.mount_dir = self.c.mount_dir.rstrip("/")
+        self.remember_file = self.c.remember_file
+        self.remember_default = self.c.remember_default
+        self.remember_enabled = self.c.remember_enabled
 
         templates = self.c.templates
         if callable(templates):
@@ -200,6 +257,82 @@ class DataMountHandler(APIHandler):
         else:
             self.uftp_auth_values = uftp_auth_values
 
+    async def recreate_remembered_mounts(self):
+        try:
+            dirname = os.path.dirname(self.remember_file)
+            os.makedirs(dirname, exist_ok=True)
+            remembered_mounts = []
+            if os.path.exists(self.remember_file):
+                with open(self.remember_file, "r") as f:
+                    remembered_mounts = json.load(f)
+                for mount in remembered_mounts:
+                    try:
+                        self.log.info(
+                            f"Create remembered mount: {mount.get('template', '_template_')} ( {mount.get('options', {}).get('displayName', '_displayName_')} )"
+                        )
+                        request = self.create_post_request(mount)
+                        await self.client.fetch(request)
+                    except Exception as e:
+                        self.log.exception("DataMount - Post failed")
+                        self.set_status(400)
+        except:
+            self.log.exception("Data Mount - Could not restore remembered mounts.")
+
+    async def remove_mount_to_remember(self, path):
+        try:
+            if os.path.exists(self.remember_file):
+                with open(self.remember_file, "r") as f:
+                    remembered_mounts = json.load(f)
+                mount_path = url_path_join(self.mount_dir, path)
+                is_stored = [
+                    x
+                    for x in remembered_mounts
+                    if "path" in x.keys() and x["path"] == mount_path
+                ]
+                if len(is_stored) > 0:
+                    new_remember_mounts = [
+                        x
+                        for x in remembered_mounts
+                        if x.get("path", None) != mount_path
+                    ]
+                    with open(self.remember_file, "w") as f:
+                        f.write(
+                            json.dumps(new_remember_mounts, sort_keys=True, indent=2)
+                        )
+                    self.log.debug(
+                        f"Data Mount - {mount_path} removed from mount store."
+                    )
+                else:
+                    self.log.debug(
+                        f"Data Mount - {mount_path} is not stored. Do not remove."
+                    )
+            else:
+                self.log.debug("Data Mount - Remember file does not exist.")
+        except:
+            self.log.exception("Data Mount - Could not remove stored mount path.")
+
+    async def store_mount_to_remember(self, mount_options):
+        dirname = os.path.dirname(self.remember_file)
+        os.makedirs(dirname, exist_ok=True)
+        remembered_mounts = []
+        try:
+            if os.path.exists(self.remember_file):
+                with open(self.remember_file, "r") as f:
+                    remembered_mounts = json.load(f)
+            else:
+                remembered_mounts = []
+        except:
+            self.log.exception(
+                "Data Mount - Could not load stored mounts. Proceed with empty list."
+            )
+            remembered_mounts = []
+        remembered_mounts.append(mount_options)
+        try:
+            with open(self.remember_file, "w") as f:
+                f.write(json.dumps(remembered_mounts, sort_keys=True, indent=2))
+        except:
+            self.log.exception("Data Mount - Could not store mounts.")
+
     @web.authenticated
     async def get(self, option=""):
         if option == "templates":
@@ -222,6 +355,15 @@ class DataMountHandler(APIHandler):
             self.finish(json.dumps(self.mount_dir))
         elif option == "enabled":
             self.finish(str(self.enabled).lower())
+        elif option == "remember":
+            if self.remember_enabled:
+                await self.recreate_remembered_mounts()
+            ret = {
+                "path": self.remember_file,
+                "default": self.remember_default,
+                "enabled": self.remember_enabled,
+            }
+            self.finish(json.dumps(ret))
         else:
             if not self.enabled:
                 self.set_status(200)
@@ -275,10 +417,16 @@ class DataMountHandler(APIHandler):
             self.log.exception("DataMount - Delete failed")
             self.set_status(400)
             self.finish(str(e))
+        finally:
+            try:
+                if self.remember_enabled:
+                    await self.remove_mount_to_remember(path)
+            except:
+                self.log.exception(
+                    "Data Mount - Remove mount from remember store failed"
+                )
 
-    @web.authenticated
-    async def post(self):
-        frontend_dict = json.loads(self.request.body)
+    def create_post_request(self, frontend_dict):
         path = frontend_dict["path"]
         path = path.replace(f"{self.mount_dir}/", "", 1)
         template = frontend_dict["template"]
@@ -297,8 +445,8 @@ class DataMountHandler(APIHandler):
             if predefined_dir:
                 config.update(predefined_dir[0])
 
-        readonly = config.pop("readonly", False)
-        display_name = config.pop("displayName", template)
+        readonly = config.get("readonly", False)
+        display_name = config.get("displayName", template)
         backend_dict = {
             "path": path,
             "options": {
@@ -316,7 +464,24 @@ class DataMountHandler(APIHandler):
                 body=json.dumps(backend_dict),
                 headers=self.headers,
             )
+            return request
+        except Exception as e:
+            self.log.exception("DataMount - Post failed")
+            self.set_status(400)
+
+    @web.authenticated
+    async def post(self):
+        try:
+            request_body = json.loads(self.request.body)
+            request = self.create_post_request(request_body)
             await self.client.fetch(request)
+            try:
+                if self.remember_enabled and request_body.get("options", {}).get(
+                    "remember", False
+                ):
+                    await self.store_mount_to_remember(request_body)
+            except:
+                self.log.exception("Data Mount - Store mount failed")
         except Exception as e:
             self.log.exception("DataMount - Post failed")
             self.set_status(400)

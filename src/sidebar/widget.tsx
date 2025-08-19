@@ -7,7 +7,7 @@ import SideBarHeader from './header';
 import SideBarBody from './body';
 import { listAllMountpoints, RequestRemoveMountPoint } from '../handler';
 
-import { IDataMount, IUFTPConfig } from '../index';
+import { IDataMount, IRememberConfig, IUFTPConfig } from '../index';
 
 interface ISideBarState {
   mountPoints: IDataMount[];
@@ -22,6 +22,7 @@ class SideBarComponent extends React.Component<
     commandId: string;
     templates: string[];
     mountDir: string;
+    rememberConfig: IRememberConfig;
     uftp_config: IUFTPConfig;
   },
   ISideBarState
@@ -31,6 +32,7 @@ class SideBarComponent extends React.Component<
   private _openCommandId: string;
   private _templates: string[];
   private _mountDir: string;
+  private _rememberConfig: IRememberConfig;
   private _uftp_config: IUFTPConfig;
 
   constructor(props: any) {
@@ -40,6 +42,7 @@ class SideBarComponent extends React.Component<
     this._openCommandId = props.commandId;
     this._templates = props.templates;
     this._mountDir = props.mountDir;
+    this._rememberConfig = props.rememberConfig;
     this.removeMountPoint = this.removeMountPoint.bind(this);
     this._uftp_config = props.uftp_config;
 
@@ -130,6 +133,7 @@ class SideBarComponent extends React.Component<
           mountDir={this._mountDir}
           loading={this.state.globalLoading}
           mountPoints={this.state.mountPoints}
+          rememberConfig={this._rememberConfig}
           removeMountPoint={this.removeMountPoint}
           uftp_config={this._uftp_config}
         />
@@ -145,6 +149,7 @@ export class SideBarWidget extends ReactWidget {
   private _sidebarComponentRef = React.createRef<SideBarComponent>();
   private _templates: string[];
   private _mountDir: string;
+  private _rememberConfig: IRememberConfig;
   private _uftp_config: IUFTPConfig;
 
   constructor(
@@ -153,6 +158,7 @@ export class SideBarWidget extends ReactWidget {
     openCommandId: string,
     templates: string[],
     mountDir: string,
+    rememberConfig: IRememberConfig,
     uftp_config: IUFTPConfig
   ) {
     super();
@@ -163,6 +169,7 @@ export class SideBarWidget extends ReactWidget {
     this._openCommandId = openCommandId;
     this._templates = templates;
     this._mountDir = mountDir;
+    this._rememberConfig = rememberConfig;
     this._uftp_config = uftp_config;
     this.title.icon = cloudStorageIcon;
     this.addClass('jp-data-mount');
@@ -198,6 +205,7 @@ export class SideBarWidget extends ReactWidget {
           commands={this._commands}
           commandId={this._openCommandId}
           templates={this._templates}
+          rememberConfig={this._rememberConfig}
           mountDir={this._mountDir}
           uftp_config={this._uftp_config}
         />

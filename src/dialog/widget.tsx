@@ -4,7 +4,7 @@ import { IDropdownValues, DropdownComponent } from '../components/dropdown';
 import { TextField } from '../components/textfield';
 import Checkbox from '../components/checkbox';
 
-import { IDataMount, IUFTPConfig } from '../index';
+import { IDataMount, IRememberConfig, IUFTPConfig } from '../index';
 import B2Drop from '../templates/b2drop';
 import AWS from '../templates/aws';
 import S3 from '../templates/s3';
@@ -17,6 +17,7 @@ export class MountDialogBody extends ReactWidget {
   private options: any;
   private templates: string[];
   private mountDir: string;
+  private rememberConfig: IRememberConfig;
   private uftp_config: IUFTPConfig;
 
   getValue(): IDataMount {
@@ -49,6 +50,7 @@ export class MountDialogBody extends ReactWidget {
     options: any,
     templates: string[],
     mountDir: string,
+    rememberConfig: IRememberConfig,
     uftp_config: IUFTPConfig
   ) {
     super();
@@ -56,6 +58,7 @@ export class MountDialogBody extends ReactWidget {
     this.options = options;
     this.templates = templates;
     this.mountDir = mountDir;
+    this.rememberConfig = rememberConfig;
     this.mountcomponent_ref = React.createRef();
     this.uftp_config = uftp_config;
   }
@@ -67,6 +70,7 @@ export class MountDialogBody extends ReactWidget {
         options={this.options}
         templates={this.templates}
         mountDir={this.mountDir}
+        rememberConfig={this.rememberConfig}
         uftp_config={this.uftp_config}
       />
     );
@@ -83,10 +87,12 @@ export class MountDialogComponent extends React.Component<
     options: any;
     templates: string[];
     mountDir: string;
+    rememberConfig: IRememberConfig;
     uftp_config: IUFTPConfig;
   },
   IMountDialogComponentState
 > {
+  private remember_config: IRememberConfig;
   private template_ref: any;
   private templates: IDropdownValues[];
   private templates_all: IDropdownValues[] = [
@@ -135,7 +141,7 @@ export class MountDialogComponent extends React.Component<
     }));
   }
 
-  handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
+  handleCheckboxChangeReadOnly(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
     this.setState(prevState => ({
       datamount: {
@@ -149,9 +155,24 @@ export class MountDialogComponent extends React.Component<
     }));
   }
 
+  handleCheckboxChangeRemember(event: React.ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.target;
+    this.setState(prevState => ({
+      datamount: {
+        ...prevState.datamount,
+        template: prevState.datamount.template,
+        options: {
+          ...prevState.datamount.options,
+          remember: checked
+        }
+      }
+    }));
+  }
+
   handleGenericOptionChange() {
     if (this.template_ref.current) {
       const readonly = this.state.datamount.options.readonly;
+      const remember = this.state.datamount.options.remember;
       const rowDict = this.template_ref.current.state.rows.reduce(
         (acc: Record<string, string>, row: any) => {
           acc[row.valueFirst] = row.valueSecond;
@@ -165,7 +186,8 @@ export class MountDialogComponent extends React.Component<
           template: prevState.datamount.template,
           config: {
             ...rowDict,
-            readonly
+            readonly,
+            remember
           }
         }
       }));
@@ -197,20 +219,24 @@ export class MountDialogComponent extends React.Component<
     options: any;
     templates: string[];
     mountDir: string;
+    rememberConfig: IRememberConfig;
     uftp_config: IUFTPConfig;
   }) {
     super(props);
     this.template_ref = React.createRef();
+    this.remember_config = props.rememberConfig;
     this.tooltips = {
       path: `Prefix ${this.props.mountDir} will be added automatically.`
     };
+    const remember = props.options?.remember ?? false;
     this.state = {
       datamount: {
         template: props.options?.template || props.templates[0],
         path: props.options?.path || `${props.mountDir}/${props.templates[0]}`,
         options: {
           ...props.options?.options,
-          readonly: props.options?.options?.readonly ?? false
+          readonly: props.options?.options?.readonly ?? false,
+          remember: remember
         },
         loading: props.options?.loading ?? false,
         failedLoading: props.options?.failedLoading ?? false
@@ -241,7 +267,10 @@ export class MountDialogComponent extends React.Component<
     this.handlePathChange = this.handlePathChange.bind(this);
     this.handleGenericOptionChange = this.handleGenericOptionChange.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.handleCheckboxChangeReadOnly =
+      this.handleCheckboxChangeReadOnly.bind(this);
+    this.handleCheckboxChangeRemember =
+      this.handleCheckboxChangeRemember.bind(this);
   }
 
   render(): JSX.Element {
@@ -270,8 +299,19 @@ export class MountDialogComponent extends React.Component<
           name="readonly"
           checked={this.state.datamount.options.readonly}
           editable={this.props.editable}
-          onChange={this.handleCheckboxChange}
+          onChange={this.handleCheckboxChangeReadOnly}
         />
+        {(this.remember_config?.enabled || false) &&
+          this.state.datamount.template !== 'uftp' && (
+            <Checkbox
+              label="Remember mount"
+              tooltip={`If enabled, this mount will be saved and automatically restored the next time you log in, unless you unmount it before restarting JupyterLab. Your access credentials will be stored in plain text on disk at ${this.props.rememberConfig.path}.`}
+              name="remember"
+              checked={this.state.datamount.options.remember}
+              editable={this.props.editable}
+              onChange={this.handleCheckboxChangeRemember}
+            />
+          )}
         {template === 'b2drop' && (
           <B2Drop
             onValueChange={this.handleOptionChange}
