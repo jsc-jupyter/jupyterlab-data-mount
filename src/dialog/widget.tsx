@@ -302,7 +302,7 @@ export class MountDialogComponent extends React.Component<
           onChange={this.handleCheckboxChangeReadOnly}
         />
         {(this.remember_config?.enabled || false) &&
-          this.state.datamount.template != 'uftp' && (
+          this.state.datamount.template !== 'uftp' && (
             <Checkbox
               label="Remember mount"
               tooltip={`If enabled, this mount will be saved and automatically restored the next time you log in, unless you unmount it before restarting JupyterLab. Your access credentials will be stored in plain text on disk at ${this.props.rememberConfig.path}.`}
