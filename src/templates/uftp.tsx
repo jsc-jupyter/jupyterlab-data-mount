@@ -85,10 +85,10 @@ export default class UFTP extends BaseComponent<IUFTPProps, IUFTPState> {
           <p>
             {this.props.config.name} Configuration
             <a
-              data-tooltip-id={'data-mount-aws-tooltip'}
+              data-tooltip-id={'data-mount-uftp-tooltip'}
               data-tooltip-html="Click for documentation"
               data-tooltip-place="left"
-              className="data-mount-aws-tooltip lh-1 ms-1 data-mount-dialog-label-tooltip"
+              className="data-mount-uftp-tooltip lh-1 ms-1 data-mount-dialog-label-tooltip"
               href="https://jsc-jupyter.github.io/jupyterlab-data-mount/users/templates/uftp/"
               target="_blank"
             >
