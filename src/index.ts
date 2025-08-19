@@ -10,6 +10,7 @@ import { SideBarWidget } from './sidebar/widget';
 import {
   RequestGetEnabled,
   RequestGetMountDir,
+  RequestGetRememberConfig,
   RequestGetTemplates,
   RequestGetUFTPConfig
 } from './handler';
@@ -25,6 +26,12 @@ export interface IDataMount {
   options: any;
   loading: boolean | false;
   failedLoading: boolean | false;
+}
+
+export interface IRememberConfig {
+  path: string;
+  default: boolean | false;
+  enabled: boolean | false;
 }
 export interface IUFTPConfig {
   name: string;
@@ -53,6 +60,7 @@ async function activate(
     console.log('JupyterLab extension jupyterlab-data-mount is activated!');
     const templates = await RequestGetTemplates();
     const mountDir = await RequestGetMountDir();
+    const rememberConfig = await RequestGetRememberConfig();
     const uftpTemplate = templates.find(t => t === 'uftp');
     let uftp_config: IUFTPConfig = {
       name: '',
@@ -69,11 +77,19 @@ async function activate(
       CommandIDs.opendialog,
       templates,
       mountDir,
+      rememberConfig,
       uftp_config
     );
     app.shell.add(sbwidget, 'left');
     app.shell.activateById(sbwidget.id);
-    addCommands(app, sbwidget, templates, mountDir, uftp_config);
+    addCommands(
+      app,
+      sbwidget,
+      templates,
+      mountDir,
+      rememberConfig,
+      uftp_config
+    );
 
     palette.addItem({
       command: CommandIDs.opendialog,
