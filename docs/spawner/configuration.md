@@ -97,3 +97,24 @@ c.KubeSpawner.init_mounts = [
 - Secrets (e.g., credentials) remain hidden from the user, ensuring security.
 
 By leveraging these configuration options, administrators can fine-tune the **JupyterHub DataMount Spawner** for their specific deployment needs.
+
+### Remember Mounts
+
+To allow users to remember mounts that persist after JupyterLab restarts, each user must have a user-specific persistent storage. Their mount configurations will be stored in plain text at a place that an administrator has to configure. It must be configured via `KubeSpawner.data_mount_config`.
+
+```python
+c.KubeSpawner.data_mount_config = """
+c.DataMount.remember_enabled = True # default is False
+c.DataMount.remember_file = "/home/jovyan/.jupyter/datamounts/mounts.json" # update if your persistent storage is at $HOME/work
+c.DataMount.remember_default = False # configure whether the checkbox should be enabled by default. Default: False
+"""
+```
+
+### Enable NFS
+
+By default NFS is disabled, since there's no authentication in plain NFS setups.
+
+```python
+c.KubeSpawner.enable_nfs_mounts = True # default is false
+c.KubeSpawner.blocked_nfs_mounts = ["192.168.0.0/24"] # User's won't be able to mount any Server within that CIDR. Can be an empty list, or multiple CIDR strings in a list.
+```

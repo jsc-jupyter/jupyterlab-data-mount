@@ -45,6 +45,20 @@ JupyterLab DataMount provides an intuitive way to access external storage within
 - **Read-Only vs Read-Write**: Some mounts may be read-only, depending on the configuration.
 - **Performance Considerations**: Remote storage access speed depends on network conditions and storage provider.
 
+## Remembering Mounts
+
+**If activated** by the administrator, you can remember mount configurations that persist across JupyterLab restarts.
+When adding a new mount, enable **“Remember this mount”** to save its settings.
+The next time you open JupyterLab, they will be mounted during startup.
+
+This feature is especially useful if you frequently connect to the same external storage (e.g., B2DROP, S3, or institutional services).
+
+> Your credentials will be stored in plain text in `$JUPYTERLAB_DATA_MOUNT_REMEMBER_FILE`.
+
+<div style="text-align: center;">
+  <img src="https://jsc-jupyter.github.io/jupyterlab-data-mount/images/remember_1.png" alt="RememberFeature" style="width: 70%;">
+</div>
+
 ## Preconfigured Mounts
 
 Before starting the JupyterLab, one can preconfigure data mounts.
