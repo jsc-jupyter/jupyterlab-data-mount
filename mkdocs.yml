@@ -43,6 +43,7 @@ nav:
           - AWS: users/templates/aws.md
           - S3-Compatible Storage: users/templates/s3.md
           - WebDAV: users/templates/webdav.md
+          - NFS: users/templates/nfs.md
           - Generic Storage: users/templates/generic.md
       - Troubleshooting: users/issues.md
   - Architecture:
