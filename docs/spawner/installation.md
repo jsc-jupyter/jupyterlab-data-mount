@@ -1,10 +1,10 @@
-# JupyterHub DataMount Spawner
+# JupyterHub DataMount Spawner Installation
 
 ## Overview
 
-The **JupyterHub DataMount Spawner** ([GitHub source](https://github.com/jsc-jupyter/jupyterhub-data-mount-kubespawner)) is designed for seamless integration within **Zero2JupyterHub (Z2JH)** deployments. It extends JupyterHub’s Spawner functionality, enabling automatic mounting of external storage resources through the DataMount extension.
+The **JupyterHub DataMount Spawner** (<a href="https://github.com/jsc-jupyter/jupyterhub-data-mount-kubespawner" target="_blank">GitHub source</a>) is designed for seamless integration within <a href="https://z2jh.jupyter.org/en/stable/" target="_blank" style="font-weight: bold">Zero2JupyterHub (Z2JH)</a> deployments. It extends JupyterHub’s Spawner functionality, enabling automatic mounting of external storage resources through the DataMount extension.
 
-## Configuration
+## Installation
 
 To use the DataMount Spawner within a Z2JH setup, the **only required configuration** is:
 

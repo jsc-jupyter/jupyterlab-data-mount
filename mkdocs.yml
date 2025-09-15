@@ -49,8 +49,8 @@ nav:
   - Architecture:
       - Overview: architecture/overview.md
       - Backend API: architecture/backend_api.md
-  - JupyterHub Spawner:
-      - Installation: spawner/installation.md
+  - Installation:
+      - Installing the Extension: spawner/installation.md
       - Configuration: spawner/configuration.md
   - Contributing: contributing.md
 
