@@ -1,8 +1,8 @@
 # JupyterLab DataMount Extension
 
 [![Documentation](https://img.shields.io/badge/Documentation-passed-green)](https://jsc-jupyter.github.io/jupyterlab-data-mount/)
-[![PyPI](https://img.shields.io/badge/PyPI-passed-green)](https://pypi.org/project/jupyterlab-data-mount/)
-[![npm](https://img.shields.io/badge/npm-passed-green)](https://www.npmjs.com/package/jupyterlab-data-mount)
+[![PyPI](https://img.shields.io/pypi/v/jupyterlab-data-mount)](https://pypi.org/project/jupyterlab-data-mount/)
+[![npm](https://img.shields.io/npm/v/jupyterlab-data-mount)](https://www.npmjs.com/package/jupyterlab-data-mount)
 
 A JupyterLab extension to mount external data storage locations.
 
