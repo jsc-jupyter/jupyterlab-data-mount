@@ -4565,7 +4565,7 @@ __metadata:
     minipass-pipeline: ^1.2.4
     p-map: ^7.0.2
     ssri: ^12.0.0
-    tar: ^7.4.3
+    tar: ^7.5.7
     unique-filename: ^4.0.0
   checksum: e95684717de6881b4cdaa949fa7574e3171946421cd8291769dd3d2417dbf7abf4aa557d1f968cca83dcbc95bed2a281072b09abfc977c942413146ef7ed4525
   languageName: node
@@ -7911,7 +7911,7 @@ __metadata:
     nopt: ^8.0.0
     proc-log: ^5.0.0
     semver: ^7.3.5
-    tar: ^7.4.3
+    tar: ^7.5.7
     which: ^5.0.0
   bin:
     node-gyp: bin/node-gyp.js
@@ -9488,9 +9488,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:^7.4.3":
-  version: 7.4.3
-  resolution: "tar@npm:7.4.3"
+"tar@npm:^7.5.7":
+  version: 7.5.7
+  resolution: "tar@npm:7.5.7"
   dependencies:
     "@isaacs/fs-minipass": ^4.0.0
     chownr: ^3.0.0
