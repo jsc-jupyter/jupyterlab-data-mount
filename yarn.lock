@@ -1865,7 +1865,7 @@ __metadata:
     camelcase: ^5.3.1
     find-up: ^4.1.0
     get-package-type: ^0.1.0
-    js-yaml: ^3.13.1
+    js-yaml: ^4.1.1
     resolve-from: ^5.0.0
   checksum: d578da5e2e804d5c93228450a1380e1a3c691de4953acc162f387b717258512a3e07b83510a936d9fab03eac90817473917e24f5d16297af3867f59328d58568
   languageName: node
@@ -7075,9 +7075,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.13.1":
-  version: 3.14.1
-  resolution: "js-yaml@npm:3.14.1"
+"js-yaml@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "js-yaml@npm:4.1.1"
   dependencies:
     argparse: ^1.0.7
     esprima: ^4.0.0
