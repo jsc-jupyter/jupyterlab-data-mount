@@ -46,4 +46,4 @@ This extension enhances productivity by simplifying how data is accessed and man
 
 ---
 
-For detailed documentation, refer to the specific sections on [Using the Extension](#), [Security Details](#), and [JupyterHub Integration](#).
+For detailed documentation, refer to the specific sections on [Installation](spawner/installation.md), [Using the Extension](users/howto.md) and [Security Details](architecture/overview.md).

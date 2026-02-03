@@ -9,57 +9,55 @@ This section provides a detailed explanation of the available configuration opti
 ### Templates
 
 ```python
-c.KubeSpawner.templates = ["b2drop", "aws"]
+c.KubeSpawner.templates = ["b2drop", "aws", "s3", "webdav", "generic"]
 ```
 
 - Allows administrators to specify which mount templates should be visible to users.
 - Users can only create mounts based on the listed templates, providing controlled access to external storage.
-- List of currently supported templates can be seen [here](https://github.com/jsc-jupyter/jupyterlab-data-mount/blob/main/src/dialog/widget.tsx#L82) (class `MountDialogComponent` , attribute `templates_all`)
+- List of currently supported templates can be seen [here](https://github.com/jsc-jupyter/jupyterlab-data-mount/blob/main/src/dialog/widget.tsx#L99) (class `MountDialogComponent` , attribute `templates_all`)
 
 ### Logging Configuration
 
 ```python
 c.KubeSpawner.logging_config = {
-logging_config = {
-    "stream": {
+  "stream": {
+    "enabled": True,
+    "level": 20,
+    "formatter": "simple",
+    "stream": "ext://sys.stdout",
+  },
+  "file": {
       "enabled": True,
       "level": 20,
-      "formatter": "simple",
-      "stream": "ext://sys.stdout",
-    },
-    "file": {
-        "enabled": True,
-        "level": 20,
-        "filename": "/mnt/data_mounts/mount.log",
-        "formatter": "simple_user", # simple_user, simple or json
-        "when": "h",
-        "interval": 1,
-        "backupCount": 0,
-        "encoding": None,
-        "delay": false,
-        "utc": false,
-        "atTime": None,
-        "errors": None,
-    },
-    "syslog": {
-      "enabled": False,
-      "level": 20,
-      "formatter": "json",
-      "address": ["ip", 5141],
-      "facility": 1,
-      "socktype": "ext://socket.SOCK_DGRAM",
-    },
-    "smtp": {
-      "enabled": False,
-      "level": 50,
-      "formatter": "simple",
-      "mailhost": "mailhost",
-      "fromaddr": "smtpmail",
-      "toaddrs": [],
-      "subject": "SMTPHandler - Log",
-      "secure": None,
-      "timeout": 1,
-    }
+      "filename": "/mnt/data_mounts/mount.log",
+      "formatter": "simple_user", # simple_user, simple or json
+      "when": "h",
+      "interval": 1,
+      "backupCount": 0,
+      "encoding": None,
+      "delay": false,
+      "utc": false,
+      "atTime": None,
+      "errors": None,
+  },
+  "syslog": {
+    "enabled": False,
+    "level": 20,
+    "formatter": "json",
+    "address": ["ip", 5141],
+    "facility": 1,
+    "socktype": "ext://socket.SOCK_DGRAM",
+  },
+  "smtp": {
+    "enabled": False,
+    "level": 50,
+    "formatter": "simple",
+    "mailhost": "mailhost",
+    "fromaddr": "smtpmail",
+    "toaddrs": [],
+    "subject": "SMTPHandler - Log",
+    "secure": None,
+    "timeout": 1,
   }
 }
 ```
