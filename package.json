@@ -99,6 +99,9 @@
         "typescript": "^5.7.3",
         "yjs": "^13.5.0"
     },
+    "resolutions": {
+        "@isaacs/brace-expansion": "5.0.1"
+    },
     "sideEffects": [
         "style/*.css",
         "style/index.js"
