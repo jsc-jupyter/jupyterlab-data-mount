@@ -100,6 +100,7 @@
         "yjs": "^13.5.0"
     },
     "resolutions": {
+        "tar": "7.5.8",
         "@isaacs/brace-expansion": "5.0.1",
         "lodash-es": "4.17.23"
     },
