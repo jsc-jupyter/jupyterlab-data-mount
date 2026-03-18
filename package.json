@@ -100,8 +100,7 @@
         "yjs": "^13.5.0"
     },
     "resolutions": {
-        "@isaacs/brace-expansion": "5.0.1",
-        "lodash-es": "4.17.23"
+        "@isaacs/brace-expansion": "5.0.1"
     },
     "sideEffects": [
         "style/*.css",
