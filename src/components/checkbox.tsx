@@ -88,7 +88,7 @@ export default class Checkbox extends Component<
                       ? 'data-mount-checkbox'
                       : 'data-mount-checkbox-disabled'
                   }
-                  inputProps={{ 'aria-label': 'controlled' }}
+                  slotProps={{ input: { 'aria-label': 'controlled' } }}
                   disabled={!this.props.editable}
                 />
               </div>

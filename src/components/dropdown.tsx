@@ -19,7 +19,7 @@ interface IDropdownProps {
 }
 
 export class DropdownComponent extends React.Component<IDropdownProps> {
-  private selectRef: React.RefObject<HTMLSelectElement>;
+  private selectRef: React.RefObject<HTMLSelectElement | null>;
 
   constructor(props: any) {
     super(props);
