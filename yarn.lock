@@ -2618,7 +2618,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/application@npm:^4.6.3":
+"@jupyterlab/application@npm:^4.5.10, @jupyterlab/application@npm:^4.6.3":
   version: 4.6.3
   resolution: "@jupyterlab/application@npm:4.6.3"
   dependencies:
@@ -2833,7 +2833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/coreutils@npm:^6.6.3":
+"@jupyterlab/coreutils@npm:^6.5.10, @jupyterlab/coreutils@npm:^6.6.3":
   version: 6.6.3
   resolution: "@jupyterlab/coreutils@npm:6.6.3"
   dependencies:
@@ -3115,7 +3115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/services@npm:^7.6.3":
+"@jupyterlab/services@npm:^7.5.10, @jupyterlab/services@npm:^7.6.3":
   version: 7.6.3
   resolution: "@jupyterlab/services@npm:7.6.3"
   dependencies:
@@ -3134,7 +3134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/settingregistry@npm:^4.6.3":
+"@jupyterlab/settingregistry@npm:^4.5.10, @jupyterlab/settingregistry@npm:^4.6.3":
   version: 4.6.3
   resolution: "@jupyterlab/settingregistry@npm:4.6.3"
   dependencies:
@@ -3205,7 +3205,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/testutils@npm:^4.6.3":
+"@jupyterlab/testutils@npm:^4.5.10":
   version: 4.6.3
   resolution: "@jupyterlab/testutils@npm:4.6.3"
   dependencies:
@@ -9126,12 +9126,12 @@ __metadata:
     "@babel/runtime": ^8.0.0
     "@emotion/react": ^11.14.0
     "@emotion/styled": ^11.14.1
-    "@jupyterlab/application": ^4.6.3
+    "@jupyterlab/application": ^4.5.10
     "@jupyterlab/builder": ^4.5.10
-    "@jupyterlab/coreutils": ^6.6.3
-    "@jupyterlab/services": ^7.6.3
-    "@jupyterlab/settingregistry": ^4.6.3
-    "@jupyterlab/testutils": ^4.6.3
+    "@jupyterlab/coreutils": ^6.5.10
+    "@jupyterlab/services": ^7.5.10
+    "@jupyterlab/settingregistry": ^4.5.10
+    "@jupyterlab/testutils": ^4.5.10
     "@mui/icons-material": ^9.3.1
     "@mui/material": ^9.3.1
     "@popperjs/core": ^2.11.8
