@@ -44,13 +44,13 @@ nav:
   - User Guide:
       - Using the Extension: users/howto.md
       - Storage Templates:
-          - UFTP: users/templates/uftp.md
           - B2Drop: users/templates/b2drop.md
           - AWS: users/templates/aws.md
           - S3-Compatible Storage: users/templates/s3.md
           - WebDAV: users/templates/webdav.md
           - NFS: users/templates/nfs.md
           - Generic Storage: users/templates/generic.md
+          - UFTP: users/templates/uftp.md
       - Troubleshooting: users/issues.md
   - Architecture:
       - Overview: architecture/overview.md
