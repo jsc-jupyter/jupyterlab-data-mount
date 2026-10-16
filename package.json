@@ -96,8 +96,15 @@
         "stylelint-config-standard": "^40.0.0",
         "stylelint-csstree-validator": "^4.0.0",
         "stylelint-prettier": "^5.0.3",
+        "ts-jest": "^29.4.14",
         "typescript": "^5.7.3",
         "yjs": "^13.6.32"
+    },
+    "resolutions": {
+        "dompurify": "^3.4.16",
+        "jest-junit/uuid": "^11.1.1",
+        "sanitize-html": "^2.17.7",
+        "shell-quote": "^1.11.0"
     },
     "sideEffects": [
         "style/*.css",

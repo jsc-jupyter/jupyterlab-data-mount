@@ -7,7 +7,55 @@ jobs:
   enforce-label:
     runs-on: ubuntu-latest
     permissions:
+      issues: write
       pull-requests: write
     steps:
-      - name: enforce-triage-label
-        uses: jupyterlab/maintainer-tools/.github/actions/enforce-label@v1
+      - name: Wait for labels to sync
+        if: github.event.action == 'opened'
+        run: sleep 60
+
+      - name: Enforce triage label
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const required = [
+              'bug',
+              'enhancement',
+              'feature',
+              'maintenance',
+              'documentation',
+              'dependencies',
+              'security',
+            ];
+            const botUsers = ['pre-commit-ci[bot]', 'dependabot[bot]'];
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: issueNumber,
+            });
+            const { data: issue } = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number: issueNumber,
+            });
+
+            if (issue.labels.some(label => required.includes(label.name))) {
+              core.info('Found an approved triage label.');
+              return;
+            }
+
+            if (botUsers.includes(pullRequest.user.login)) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                labels: ['maintenance'],
+              });
+              return;
+            }
+
+            core.setFailed(
+              `Select at least one triage label: ${required.join(', ')}`,
+            );
