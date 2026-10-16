@@ -13,7 +13,7 @@ The **JupyterLab DataMount** extension is designed to provide seamless access to
 - **Easy Storage Integration**: Supports various storage backends, including WebDav, AWS, S3-compatible storage and many more.
 - **User-Friendly Interface**: Provides a simple UI for managing data mounts without requiring complex configurations.
 - **Seamless JupyterHub Integration**: Works effortlessly with JupyterHub, allowing admins to preconfigure storage access.
-- **Secure & Efficient**: Ensures data security with a sidecar-based approach and restricts privilege escalation.
+- **Sidecar-based mounting**: The JupyterLab user container remains unprivileged, while the separate mount sidecar runs with elevated privileges required for filesystem mounts.
 - **Flexible Usage**: Works for different user needs, including read-only access, temporary mounts, and persistent storage.
 
 ## Who Should Use This Extension?
@@ -28,10 +28,10 @@ JupyterLab DataMount is designed for:
 
 JupyterLab DataMount is built with security in mind:
 
-- **Mounting realized in a sidecar container**: The mounting process is embedded in a separate container, ensuring that the main JupyterLab environment remains isolated.
-- **No Privileged Execution**: The extension operates without requiring root privileges, preventing unauthorized access.
-- **No Privilege Escalation**: The security model explicitly disallows privilege escalation to ensure a controlled execution environment.
-- **Hidden Secrets**: Storage credentials and secrets can be preconfigured and hidden from users while still allowing access to external storage in a controlled manner.
+- **Separate mount sidecar**: Mount operations run in a sidecar container and the mounted volume is propagated into the JupyterLab container.
+- **Different privilege levels**: The JupyterLab user container does not need to be privileged. The sidecar runs as root with elevated mount capabilities (`SYS_ADMIN`, `MKNOD`, and `SETFCAP`) and `allowPrivilegeEscalation` enabled because kernel mounts require them. Treat the sidecar image and its API as privileged infrastructure.
+- **Preconfigured mounts**: Administrator-provided mount configuration is marked external and its credentials are redacted from the mount-list API response. Users can open these mounts but cannot remove them through the DataMount API.
+- **User credentials**: Credentials entered by a user are used by the sidecar to create the mount. If the administrator enables “Remember mounts,” those settings, including credentials, are stored in plain text in the configured user-persistent file.
 
 ## Use Cases
 

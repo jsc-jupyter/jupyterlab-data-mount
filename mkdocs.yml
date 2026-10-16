@@ -1,11 +1,12 @@
 site_name: JupyterLab DataMount
 site_description: JupyterLab DataMount Documentation
 site_author: EOSC Beyond, Juelich Supercomputing Centre
+site_url: https://jsc-jupyter.github.io/jupyterlab-data-mount/
 repo_url: https://github.com/jsc-jupyter/jupyterlab-data-mount
 theme:
   name: material
   features:
-    - nagivation.tabs
+    - navigation.tabs
     - navigation.sections
     - navigation.collapse
     - navigation.footer
@@ -39,6 +40,7 @@ nav:
   - User Guide:
       - Using the Extension: users/howto.md
       - Storage Templates:
+          - UFTP: users/templates/uftp.md
           - B2Drop: users/templates/b2drop.md
           - AWS: users/templates/aws.md
           - S3-Compatible Storage: users/templates/s3.md
@@ -72,7 +74,6 @@ markdown_extensions:
   - meta
   - tables
   - def_list
-  - neoteroi.cards
   - footnotes
   - pymdownx.details
   - pymdownx.superfences
@@ -81,7 +82,6 @@ markdown_extensions:
 
 extra_css:
   - css/style.css
-  - css/neoteroi-cards.css
   - css/extra.css
 
 extra:

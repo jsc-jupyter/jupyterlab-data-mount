@@ -1,8 +1,8 @@
 # Generic Template Configuration
 
-The **Generic** template allows users to mount each rclone supported Storage within JupyterLab.
+The **Generic** template allows users to configure any storage type supported by rclone within JupyterLab. Administrators can restrict use of this template through the spawner's template allowlist.
 
-> JupyterLab DataMount uses **rclone** to mount WebDAV. Check out their [documentation](https://rclone.org/) for more details.
+> JupyterLab DataMount uses **rclone** to mount the configured storage. Check out the rclone [documentation](https://rclone.org/) for supported backends and configuration options.
 
 ## Configuration Parameters
 
@@ -20,7 +20,7 @@ To configure a Generic mount, the following parameters are required:
 <details>
   <summary>RClone configuration</summary>
   <br>
-  The following configuration is used to mount WebDAV with rclone:<br>
+  The following configuration is used to mount a generic rclone remote:<br>
   generic.config:<br>
   ```yaml
   [generic]
@@ -28,7 +28,7 @@ To configure a Generic mount, the following parameters are required:
   <br>
   Mounted via <br>
   ```bash
-  rclone mount --config generic.config _type_:/ _path_ --vfs-cache-max-size=10G --vfs-read-chunk-size=64M --vfs-cache-mode=writes --allow-other --uid=1000 --gid=100
+  rclone mount --config generic.config _type_:/ _path_ --vfs-cache-max-size=10G --vfs-read-chunk-size=4M --vfs-cache-mode=writes --allow-other --uid=1000 --gid=100
   ```
   <br>
 </details>
