@@ -1,32 +1,52 @@
-name: Deploy MkDocs
+name: Deploy docs to GitHub Pages
 
 on:
   push:
-    branches:
-      - docs # Change this to your default branch
+    branches: [docs]
+  pull_request:
+    branches: [docs]
 
 permissions:
-  contents: write # Grant the workflow write access to push to gh-pages
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.9"
+          python-version: "3.12"
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+      - name: Install Zensical
+        run: python -m pip install zensical==0.0.70
 
-      - name: Build and Deploy MkDocs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdocs gh-deploy --config-file mkdocs.yml --force --remote-branch gh-pages
+      - name: Build Zensical site
+        run: zensical build --clean
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
