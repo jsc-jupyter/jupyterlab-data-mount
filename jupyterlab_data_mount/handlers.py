@@ -20,7 +20,7 @@ class DataMount(Configurable):
     )
 
     api_url = Unicode(
-        os.environ.get("JUPYTERLAB_DATA_MOUNT_API_URL", "http://localhost:8090/"),
+        os.environ.get("JUPYTERLAB_DATA_MOUNT_API_URL", "http://127.0.0.1:8090/"),
         config=True,
         help=("URL used to connect to DataMount RClone instance."),
     )
