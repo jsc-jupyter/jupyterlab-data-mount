@@ -1,11 +1,12 @@
 site_name: JupyterLab DataMount
 site_description: JupyterLab DataMount Documentation
 site_author: EOSC Beyond, Juelich Supercomputing Centre
+site_url: https://jsc-jupyter.github.io/jupyterlab-data-mount/
 repo_url: https://github.com/jsc-jupyter/jupyterlab-data-mount
 theme:
   name: material
   features:
-    - nagivation.tabs
+    - navigation.tabs
     - navigation.sections
     - navigation.collapse
     - navigation.footer
@@ -26,10 +27,14 @@ theme:
   custom_dir: docs/custom
   palette:
     - scheme: default
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
     - scheme: slate
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/lightbulb-outline
         name: Switch to light mode
@@ -45,6 +50,7 @@ nav:
           - WebDAV: users/templates/webdav.md
           - NFS: users/templates/nfs.md
           - Generic Storage: users/templates/generic.md
+          - UFTP: users/templates/uftp.md
       - Troubleshooting: users/issues.md
   - Architecture:
       - Overview: architecture/overview.md
@@ -72,7 +78,6 @@ markdown_extensions:
   - meta
   - tables
   - def_list
-  - neoteroi.cards
   - footnotes
   - pymdownx.details
   - pymdownx.superfences
@@ -81,7 +86,6 @@ markdown_extensions:
 
 extra_css:
   - css/style.css
-  - css/neoteroi-cards.css
   - css/extra.css
 
 extra:

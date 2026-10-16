@@ -1,0 +1,38 @@
+name: Zensical build check
+
+on:
+  push:
+    branches:
+      - docs
+  pull_request:
+    branches:
+      - docs
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Zensical
+        run: python -m pip install zensical==0.0.70
+
+      - name: Build site with existing MkDocs configuration
+        run: zensical build --clean
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zensical-site
+          path: site
+          if-no-files-found: error
+          retention-days: 7

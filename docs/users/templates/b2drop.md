@@ -48,7 +48,7 @@ To configure a B2Drop mount, the following parameters are required:
   <br>
   Mounted via <br>
   ```bash
-  rclone mount --config b2drop.config b2drop:_remotepath_ _path_ --vfs-cache-max-size=10G --vfs-read-chunk-size=64M --vfs-cache-mode=writes --allow-other --uid=1000 --gid=100
+  rclone mount --config b2drop.config b2drop:_remotepath_ _path_ --vfs-cache-max-size=10G --vfs-read-chunk-size=4M --vfs-cache-mode=writes --allow-other --uid=1000 --gid=100
   ```
   <br>
 </details>

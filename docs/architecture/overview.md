@@ -23,7 +23,7 @@ The JupyterLab DataMount Extension integrates external storage seamlessly into J
     - The **mount container** runs as `root` with `privileged: true` to handle mounting securely.
     - The **Jupyter container** operates as the `jovyan` user with no extra privileges, ensuring security by design.
 
-This architecture ensures that administrators do not need to grant additional permissions to enable the JupyterLab DataMount Extension.
+The JupyterLab container remains unprivileged, but the mount sidecar must run as root with `privileged: true` and the configured mount capabilities. The API sidecar is bound to the Pod loopback interface by default, so the Jupyter Server and notebook code in the same Pod can reach it while other Pods cannot connect through the Pod IP. If the API is moved to a separate deployment, configure its bind address deliberately and restrict network access; the API does not provide authentication.
 
 ## Compatibility & Flexibility
 

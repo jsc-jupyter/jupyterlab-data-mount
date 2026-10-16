@@ -71,4 +71,4 @@ Preconfigured mounts are displayed in _italic_ and only provide the **"Open Dire
 
 ## Next Steps
 
-Now that you’ve learned how to mount storage, explore the [Storage Templates](#) section for specific details on configuring B2Drop, AWS S3, WebDav, and other storage options.
+Now that you’ve learned how to mount storage, explore the individual [B2Drop](templates/b2drop.md), [AWS](templates/aws.md), [S3-compatible](templates/s3.md), [WebDAV](templates/webdav.md), [NFS](templates/nfs.md), [UFTP](templates/uftp.md), and [Generic](templates/generic.md) guides.

@@ -13,7 +13,8 @@ c.KubeSpawner.templates = ["b2drop", "aws", "s3", "webdav", "generic"]
 ```
 
 - Allows administrators to specify which mount templates should be visible to users.
-- Users can only create mounts based on the listed templates, providing controlled access to external storage.
+- The configured templates are passed to both the Jupyter Server and sidecar API. The API rejects mount requests for templates outside this allowlist, including requests made directly from notebook code.
+- If `templates` is unset or empty, the spawner uses `uftp`, `b2drop`, `aws`, `s3`, `webdav`, `nfs`, and `generic`.
 - List of currently supported templates can be seen [here](https://github.com/jsc-jupyter/jupyterlab-data-mount/blob/main/src/dialog/widget.tsx#L99) (class `MountDialogComponent` , attribute `templates_all`)
 
 ### Logging Configuration
@@ -35,8 +36,8 @@ c.KubeSpawner.logging_config = {
       "interval": 1,
       "backupCount": 0,
       "encoding": None,
-      "delay": false,
-      "utc": false,
+      "delay": False,
+      "utc": False,
       "atTime": None,
       "errors": None,
   },
@@ -92,7 +93,8 @@ c.KubeSpawner.init_mounts = [
 
 - Enables automatic mounting of external storage when JupyterLab starts.
 - Mounted storage is available to the user without manual intervention.
-- Secrets (e.g., credentials) remain hidden from the user, ensuring security.
+- The mount is marked administrator-managed: its configuration is redacted by the API, and the API rejects attempts to remove it.
+- Secrets are not exposed by the mount-list API response, but administrators should still protect the Hub configuration and the sidecar's configuration volume.
 
 By leveraging these configuration options, administrators can fine-tune the **JupyterHub DataMount Spawner** for their specific deployment needs.
 
@@ -116,3 +118,5 @@ By default NFS is disabled, since there's no authentication in plain NFS setups.
 c.KubeSpawner.enable_nfs_mounts = True # default is false
 c.KubeSpawner.blocked_nfs_mounts = ["192.168.0.0/24"] # User's won't be able to mount any Server within that CIDR. Can be an empty list, or multiple CIDR strings in a list.
 ```
+
+NFS server addresses must be IP literals. The spawner's default block list includes common private, loopback, and link-local IPv4 ranges; configure the list for your network and threat model.

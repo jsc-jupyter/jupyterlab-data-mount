@@ -42,7 +42,7 @@ To configure an AWS mount, the following parameters are required:
   <br>
   Mounted via <br>
   ```bash
-  rclone mount --config aws.config aws:_bucketname_ _path_ --vfs-cache-max-size=10G --vfs-read-chunk-size=64M --vfs-cache-mode=writes --allow-other --uid=1000 --gid=100
+  rclone mount --config aws.config aws:_bucketname_ _path_ --vfs-cache-max-size=10G --vfs-read-chunk-size=4M --vfs-cache-mode=writes --allow-other --uid=1000 --gid=100
   ```
   <br>
 </details>

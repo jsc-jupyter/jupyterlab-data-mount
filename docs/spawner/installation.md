@@ -36,3 +36,16 @@ singleuser:
 ```
 
 This ensures full compatibility while leveraging the automatic mounting capabilities provided by the DataMount Spawner.
+
+## Pinning Versions
+
+By default, the spawner uses the `jupyterjsc/jupyterlab-data-mount-api:latest` sidecar image and installs the latest `jupyterlab-data-mount` package when the single-user server starts. For reproducible deployments, pin both:
+
+```python
+c.KubeSpawner.data_mounts_image = "jupyterjsc/jupyterlab-data-mount-api:<image-tag>"
+c.KubeSpawner.data_mount_extension_version = "<package-version>"
+```
+
+The sidecar needs privileged mount capabilities and a bidirectional mount for the shared volume. The JupyterLab container uses host-to-container propagation and does not need to run privileged; see [Architecture](../architecture/overview.md) for the security boundary.
+
+The spawner package and sidecar image are released separately. Use versions that include the same DataMount policy changes: the spawner passes the template allowlist and prepares the shared mount directory, while the sidecar enforces the allowlist and protects administrator-provisioned mounts. Pin and upgrade both together; changing only the Python package does not update the sidecar API.
